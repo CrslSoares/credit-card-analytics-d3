@@ -5,124 +5,234 @@ function initChart2(data) {
   container.html("");
   filterContainer.html("");
 
-  // Contrôle interactif
-  filterContainer.append("label")
-    .text("Afficher par : ")
-    .style("font-weight", "bold")
-    .style("margin-right", "8px");
-
-  const select = filterContainer.append("select")
-    .attr("id", "spending-metric-select");
-
-  select.selectAll("option")
-    .data([
-      { label: "Montant total dépense ($)", value: "amount" },
-      { label: "Part des transactions (estimée)", value: "count" }
-    ])
-    .enter()
-    .append("option")
-    .attr("value", d => d.value)
-    .text(d => d.label);
-
+  // 1. Catégories de dépenses
   const spendingCategories = [
-    { key: "Online_Shopping_Spending", label: "Achats en ligne" },
-    { key: "Grocery_Spending", label: "Courses / Alimentation" },
-    { key: "Fuel_Spending", label: "Carburant" },
-    { key: "Dining_Spending", label: "Restauration" },
-    { key: "Travel_Spending", label: "Voyages" },
-    { key: "Entertainment_Spending", label: "Divertissement" },
-    { key: "Utility_Bill_Spending", label: "Factures & Services" }
+    { keys: ["Online_Shopping_Spending", "Online_Shopping"], label: "Achats en ligne", icon: "🛒" },
+    { keys: ["Grocery_Spending", "Grocery"], label: "Alimentation", icon: "🍏" },
+    { keys: ["Fuel_Spending", "Fuel"], label: "Carburant", icon: "⛽" },
+    { keys: ["Dining_Spending", "Dining"], label: "Restauration", icon: "🍽️" },
+    { keys: ["Travel_Spending", "Travel"], label: "Voyages", icon: "✈️" },
+    { keys: ["Entertainment_Spending", "Entertainment"], label: "Divertissement", icon: "🎟️" },
+    { keys: ["Utility_Bill_Spending", "Utility_Bill", "Utilities"], label: "Factures", icon: "⚡" }
   ];
 
-  const width = 500;
-  const height = 350;
-  const radius = Math.min(width, height) / 2 - 20;
+  function getSpendingValue(d, catKeys) {
+    for (const key of catKeys) {
+      if (d[key] !== undefined && d[key] !== null) {
+        return +d[key] || 0;
+      }
+    }
+    return 0;
+  }
 
-  const svg = container.append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append("g")
-    .attr("transform", `translate(${width / 2},${height / 2})`);
+  function normalizeGender(genderStr) {
+    if (!genderStr) return "Unknown";
+    const g = String(genderStr).trim().toLowerCase();
+    if (g === "male" || g === "m" || g === "homme" || g === "h") return "Male";
+    if (g === "female" || g === "f" || g === "femme") return "Female";
+    return genderStr;
+  }
+
+  // 2. Nettoyage des données
+  const processedData = data.map(d => {
+    const ageNum = +d.Age || 0;
+    return {
+      ...d,
+      AgeNum: ageNum,
+      NormalizedGender: normalizeGender(d.Gender),
+      AgeGroup: ageNum < 30 ? "< 30 ans" : ageNum < 50 ? "30-49 ans" : "50+ ans"
+    };
+  });
+
+  // 3. Barre de filtres (Carte + Âge + Genre)
+  const filterWrapper = filterContainer.append("div")
+    .style("display", "flex")
+    .style("align-items", "center")
+    .style("gap", "20px")
+    .style("flex-wrap", "wrap")
+    .style("margin-bottom", "15px");
+
+  // Helper pour créer un sélecteur
+  function createSelect(label, id, options) {
+    const box = filterWrapper.append("div")
+      .style("display", "flex")
+      .style("align-items", "center")
+      .style("gap", "8px");
+
+    box.append("label")
+      .style("font-weight", "bold")
+      .style("font-size", "13px")
+      .text(label);
+
+    const select = box.append("select")
+      .attr("id", id)
+      .style("padding", "5px 10px")
+      .style("border-radius", "6px")
+      .style("border", "1px solid #cbd5e1");
+
+    select.selectAll("option")
+      .data(options)
+      .enter()
+      .append("option")
+      .attr("value", d => d.value)
+      .text(d => d.label);
+
+    return select;
+  }
+
+  const cardSelect = createSelect("Type de carte :", "card-type-filter", [
+    { value: "All", label: "Toutes les cartes" },
+    { value: "Basic", label: "Carte Basic" },
+    { value: "Silver", label: "Carte Silver" },
+    { value: "Gold", label: "Carte Gold" },
+    { value: "Platinum", label: "Carte Platinum" },
+    { value: "Signature", label: "Carte Signature" }
+  ]);
+
+  const ageSelect = createSelect("Tranche d'âge :", "age-filter", [
+    { value: "All", label: "Toutes les tranches" },
+    { value: "< 30 ans", label: "< 30 ans" },
+    { value: "30-49 ans", label: "30-49 ans" },
+    { value: "50+ ans", label: "50+ ans" }
+  ]);
+
+  const genderSelect = createSelect("Genre :", "gender-filter", [
+    { value: "All", label: "Tous les genres" },
+    { value: "Male", label: "Hommes 👨" },
+    { value: "Female", label: "Femmes 👩" }
+  ]);
+
+  // Conteneur principal pour le donut unique
+  const chartBox = container.append("div")
+    .style("display", "flex")
+    .style("flex-direction", "column")
+    .style("align-items", "center")
+    .style("justify-content", "center");
 
   const colorScale = d3.scaleOrdinal()
     .domain(spendingCategories.map(d => d.label))
-    .range(d3.schemeCategory10);
+    .range(["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#64748b"]);
 
-  function updateChart(metric) {
-    svg.selectAll("*").remove();
+  // Tooltip
+  let tooltip = d3.select("body").select(".chart-tooltip");
+  if (tooltip.empty()) {
+    tooltip = d3.select("body").append("div")
+      .attr("class", "chart-tooltip")
+      .style("position", "absolute")
+      .style("visibility", "hidden")
+      .style("background-color", "rgba(15, 23, 42, 0.95)")
+      .style("color", "#fff")
+      .style("padding", "8px 12px")
+      .style("border-radius", "6px")
+      .style("font-size", "12px")
+      .style("pointer-events", "none")
+      .style("z-index", "1000");
+  }
 
-    const categoryTotals = spendingCategories.map(cat => {
-      const totalAmount = d3.sum(data, d => d[cat.key] || 0);
-      const avgTx = d3.mean(data, d => d.Monthly_Transactions || 1);
-      const value = metric === "amount" ? totalAmount : Math.round(totalAmount / (avgTx * 10));
-      return { name: cat.label, value: value };
-    });
+  // 4. Fonction de mise à jour du Donut
+  function updateChart() {
+    chartBox.html("");
 
-    const totalValue = d3.sum(categoryTotals, d => d.value);
+    const selectedCard = cardSelect.property("value");
+    const selectedAge = ageSelect.property("value");
+    const selectedGender = genderSelect.property("value");
 
-    const pie = d3.pie()
-      .value(d => d.value)
-      .sort(null);
+    let filteredData = processedData;
 
-    const arc = d3.arc()
-      .innerRadius(radius * 0.5)
-      .outerRadius(radius);
+    if (selectedCard !== "All") {
+      filteredData = filteredData.filter(d => String(d.Card_Type).trim() === selectedCard);
+    }
+    if (selectedAge !== "All") {
+      filteredData = filteredData.filter(d => d.AgeGroup === selectedAge);
+    }
+    if (selectedGender !== "All") {
+      filteredData = filteredData.filter(d => d.NormalizedGender === selectedGender);
+    }
 
-    const arcsData = pie(categoryTotals);
+    const totals = spendingCategories.map(cat => ({
+      name: cat.label,
+      icon: cat.icon,
+      value: d3.sum(filteredData, d => getSpendingValue(d, cat.keys))
+    }));
+
+    const grandTotal = d3.sum(totals, d => d.value);
+
+    // Titre d'effectif
+    chartBox.append("h3")
+      .style("margin-bottom", "15px")
+      .style("color", "#1e293b")
+      .style("font-size", "15px")
+      .text(`Échantillon : ${filteredData.length} clients`);
+
+    const width = 360;
+    const height = 320;
+    const radius = Math.min(width, height) / 2 - 20;
+
+    const svg = chartBox.append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", `translate(${width / 2},${height / 2})`);
+
+    const pie = d3.pie().value(d => d.value).sort(null);
+    const arc = d3.arc().innerRadius(radius * 0.55).outerRadius(radius);
+    const arcHover = d3.arc().innerRadius(radius * 0.52).outerRadius(radius + 8);
+
+    const centerTitle = svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("y", -8)
+      .style("font-size", "12px")
+      .style("fill", "#64748b")
+      .text("Répartition");
+
+    const centerValue = svg.append("text")
+      .attr("text-anchor", "middle")
+      .attr("y", 14)
+      .style("font-size", "18px")
+      .style("font-weight", "bold")
+      .style("fill", "#0f172a")
+      .text("100%");
 
     const path = svg.selectAll("path")
-      .data(arcsData)
+      .data(pie(totals))
       .enter()
       .append("path")
       .attr("d", arc)
       .attr("fill", d => colorScale(d.data.name))
       .attr("stroke", "#ffffff")
       .style("stroke-width", "2px")
-      .style("opacity", 0.85);
+      .style("cursor", "pointer");
 
-    const centerText = svg.append("text")
-      .attr("text-anchor", "middle")
-      .attr("y", -8)
-      .style("font-size", "13px")
-      .style("font-weight", "bold")
-      .style("fill", "#334155")
-      .text("Total Dépenses");
+    path.on("mouseover", function (event, d) {
+      d3.select(this).transition().duration(150).attr("d", arcHover);
+      const percent = grandTotal > 0 ? ((d.data.value / grandTotal) * 100).toFixed(1) : 0;
 
-    const centerSubText = svg.append("text")
-      .attr("text-anchor", "middle")
-      .attr("y", 16)
-      .style("font-size", "12px")
-      .style("fill", "#64748b")
-      .text(
-        metric === "amount"
-          ? d3.format(",.0f")(totalValue) + " $"
-          : d3.format(",.0f")(totalValue) + " tx"
-      );
+      centerTitle.text(`${d.data.icon} ${d.data.name}`);
+      centerValue.text(`${percent}%`);
 
-    path.on("mouseover", function(event, d) {
-      d3.select(this).style("opacity", 1).style("stroke-width", "3px");
-      const percent = ((d.data.value / totalValue) * 100).toFixed(1);
-      const valFormatted = metric === "amount"
-        ? d3.format(",.0f")(d.data.value) + " $"
-        : d3.format(",.0f")(d.data.value) + " tx";
-
-      centerText.text(d.data.name);
-      centerSubText.text(`${valFormatted} (${percent}%)`);
+      tooltip.style("visibility", "visible")
+        .html(`
+          <strong>${d.data.icon} ${d.data.name}</strong><br/>
+          Part du total : <strong>${percent}%</strong>
+        `);
     })
-    .on("mouseout", function() {
-      d3.select(this).style("opacity", 0.85).style("stroke-width", "2px");
-      centerText.text("Total Dépenses");
-      centerSubText.text(
-        metric === "amount"
-          ? d3.format(",.0f")(totalValue) + " $"
-          : d3.format(",.0f")(totalValue) + " tx"
-      );
+    .on("mousemove", function (event) {
+      tooltip.style("top", (event.pageY - 10) + "px")
+             .style("left", (event.pageX + 10) + "px");
+    })
+    .on("mouseout", function () {
+      d3.select(this).transition().duration(150).attr("d", arc);
+      centerTitle.text("Répartition");
+      centerValue.text("100%");
+      tooltip.style("visibility", "hidden");
     });
   }
 
-  updateChart("amount");
+  // Initialisation
+  updateChart();
 
-  select.on("change", function() {
-    updateChart(this.value);
-  });
+  // Événements des filtres
+  cardSelect.on("change", updateChart);
+  ageSelect.on("change", updateChart);
+  genderSelect.on("change", updateChart);
 }
