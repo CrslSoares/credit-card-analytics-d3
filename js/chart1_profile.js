@@ -1,148 +1,212 @@
 function initChart1(data) {
+  // 1. Seleção dos contêineres conforme os IDs do seu index.html
   const container = d3.select("#chart-profile");
   const filterContainer = d3.select("#filter-container-1");
 
-  // Nettoyage au cas où
+  // Limpeza
   container.html("");
   filterContainer.html("");
 
-  // Menu déroulant pour changer la dimension
-  filterContainer.append("label")
-    .text("Grouper par : ")
-    .style("font-weight", "bold");
+  // Dimensions do SVG
+  const margin = { top: 35, right: 10, bottom: 10, left: 10 };
+  const width = 850 - margin.left - margin.right;
+  const height = 500 - margin.top - margin.bottom;
 
-  const select = filterContainer.append("select")
-    .attr("id", "groupby-select");
+  // 2. Cores personalizadas por tipo de cartão
+  const cardColors = {
+    "Basic": "#94a3b8",      // Cinza
+    "Silver": "#38bdf8",     // Azul claro
+    "Gold": "#f59e0b",       // Dourado
+    "Platinum": "#8b5cf6",   // Roxo
+    "Signature": "#d97706"   // Laranja escuro / Ambar
+  };
 
-  select.selectAll("option")
-    .data([
-      { label: "Secteur d'activité (Occupation)", value: "Occupation" },
-      { label: "Genre (Gender)", value: "Gender" },
-      { label: "Tranche d'âge", value: "AgeGroup" }
-    ])
-    .enter()
-    .append("option")
-    .attr("value", d => d.value)
-    .text(d => d.label);
+  // 3. Legenda Superior no filtro
+  const legend = filterContainer.append("div")
+    .style("display", "flex")
+    .style("gap", "15px")
+    .style("margin-bottom", "12px")
+    .style("align-items", "center")
+    .style("flex-wrap", "wrap");
 
-  // Préparer les tranches d’âge dans les données
-  const processedData = data.map(d => ({
-    ...d,
-    AgeGroup: d.Age < 30 ? "< 30 ans" : d.Age < 50 ? "30-49 ans" : "50+ ans"
-  }));
+  legend.append("span")
+    .style("font-weight", "bold")
+    .style("font-size", "13px")
+    .text("Tipo de Cartão mais Frequente: ");
 
-  // Dimensions du SVG
-  const margin = { top: 30, right: 120, bottom: 80, left: 60 };
-  const width = 600 - margin.left - margin.right;
-  const height = 400 - margin.top - margin.bottom;
+  Object.entries(cardColors).forEach(([card, color]) => {
+    const item = legend.append("div")
+      .style("display", "flex")
+      .style("align-items", "center")
+      .style("gap", "6px");
 
+    item.append("div")
+      .style("width", "14px")
+      .style("height", "14px")
+      .style("background-color", color)
+      .style("border-radius", "3px");
+
+    item.append("span")
+      .style("font-size", "12px")
+      .text(card);
+  });
+
+  // 4. Processamento dos Dados (Occupation -> Age -> Avg Spending + Mode Card)
+  const groupedData = d3.rollup(
+    data,
+    v => {
+      const avgSpending = d3.mean(v, d => d.Monthly_Spending) || 0;
+      
+      // Encontrar o tipo de cartão mais comum
+      const cardCounts = d3.rollup(v, c => c.length, d => d.Card_Type);
+      let topCard = "Basic";
+      let maxCount = -1;
+      cardCounts.forEach((count, card) => {
+        if (count > maxCount) {
+          maxCount = count;
+          topCard = card;
+        }
+      });
+
+      return {
+        avgSpending: avgSpending,
+        topCard: topCard,
+        count: v.length
+      };
+    },
+    d => d.Occupation,
+    d => d.Age
+  );
+
+  // 5. Estruturação Hierárquica para d3.hierarchy
+  const hierarchyData = {
+    name: "Occupations",
+    children: Array.from(groupedData, ([occupation, ageMap]) => ({
+      name: occupation,
+      children: Array.from(ageMap, ([age, metrics]) => ({
+        name: `${age} anos`,
+        age: age,
+        value: metrics.avgSpending,
+        topCard: metrics.topCard,
+        count: metrics.count
+      }))
+    }))
+  };
+
+  // 6. Layout do Treemap
+  const root = d3.hierarchy(hierarchyData)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap()
+    .size([width, height])
+    .paddingOuter(4)
+    .paddingTop(26)
+    .paddingInner(2)
+    .tile(d3.treemapBinary)(root);
+
+  // 7. SVG
   const svg = container.append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  const cardTypes = ["Basic", "Silver", "Gold", "Platinum"];
-  const colorScale = d3.scaleOrdinal()
-    .domain(cardTypes)
-    .range(["#94a3b8", "#38bdf8", "#f59e0b", "#8b5cf6"]);
-
-  function updateChart(groupByKey) {
-    // Aggrégation des données selon la clé choisie
-    const rolledUp = d3.rollup(
-      processedData,
-      v => {
-        const counts = { Basic: 0, Silver: 0, Gold: 0, Platinum: 0 };
-        v.forEach(d => counts[d.Card_Type] = (counts[d.Card_Type] || 0) + 1);
-        return counts;
-      },
-      d => d[groupByKey]
-    );
-
-    const categories = Array.from(rolledUp.keys());
-    const formattedData = categories.map(cat => ({
-      group: cat,
-      ...rolledUp.get(cat)
-    }));
-
-    // Empilement (Stack)
-    const stack = d3.stack().keys(cardTypes);
-    const stackedData = stack(formattedData);
-
-    // Échelles
-    const x = d3.scaleBand()
-      .domain(categories)
-      .range([0, width])
-      .padding(0.3);
-
-    const maxY = d3.max(formattedData, d => d.Basic + d.Silver + d.Gold + d.Platinum);
-    const y = d3.scaleLinear()
-      .domain([0, maxY])
-      .nice()
-      .range([height, 0]);
-
-    // Redessiner les axes
-    svg.selectAll(".axis").remove();
-
-    svg.append("g")
-      .attr("class", "axis x-axis")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .attr("transform", "rotate(-25)")
-      .style("text-anchor", "end");
-
-    svg.append("g")
-      .attr("class", "axis y-axis")
-      .call(d3.axisLeft(y));
-
-    // Dessin des barres empilées
-    svg.selectAll(".layer-group").remove();
-
-    const layers = svg.selectAll(".layer-group")
-      .data(stackedData)
-      .enter()
-      .append("g")
-      .attr("class", "layer-group")
-      .attr("fill", d => colorScale(d.key));
-
-    layers.selectAll("rect")
-      .data(d => d)
-      .enter()
-      .append("rect")
-      .attr("x", d => x(d.data.group))
-      .attr("y", d => y(d[1]))
-      .attr("height", d => y(d[0]) - y(d[1]))
-      .attr("width", x.bandwidth());
-
-    // Légende
-    svg.selectAll(".legend").remove();
-    const legend = svg.append("g")
-      .attr("class", "legend")
-      .attr("transform", `translate(${width + 20}, 0)`);
-
-    cardTypes.forEach((type, i) => {
-      const legRow = legend.append("g")
-        .attr("transform", `translate(0, ${i * 20})`);
-
-      legRow.append("rect")
-        .attr("width", 12)
-        .attr("height", 12)
-        .attr("fill", colorScale(type));
-
-      legRow.append("text")
-        .attr("x", 20)
-        .attr("y", 10)
-        .text(type)
-        .style("font-size", "12px");
-    });
+  // Tooltip
+  let tooltip = d3.select("body").select(".treemap-tooltip");
+  if (tooltip.empty()) {
+    tooltip = d3.select("body").append("div")
+      .attr("class", "treemap-tooltip")
+      .style("position", "absolute")
+      .style("visibility", "hidden")
+      .style("background", "rgba(15, 23, 42, 0.95)")
+      .style("color", "#fff")
+      .style("padding", "8px 12px")
+      .style("border-radius", "6px")
+      .style("font-size", "12px")
+      .style("box-shadow", "0 4px 6px -1px rgba(0,0,0,0.3)")
+      .style("pointer-events", "none")
+      .style("z-index", "1000");
   }
 
-  // Premier affichage
-  updateChart("Occupation");
+  // 8. Categoria Principal (Group Occupation Header)
+  const node = svg.selectAll("g.occupation-group")
+    .data(root.descendants().filter(d => d.depth === 1))
+    .enter()
+    .append("g")
+    .attr("class", "occupation-group")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
 
-  // Événement au changement de filtre
-  select.on("change", function () {
-    updateChart(this.value);
-  });
+  node.append("rect")
+    .attr("width", d => d.x1 - d.x0)
+    .attr("height", 22)
+    .attr("fill", "#1e293b")
+    .attr("rx", 3);
+
+  node.append("text")
+    .attr("x", 6)
+    .attr("y", 15)
+    .style("fill", "#f8fafc")
+    .style("font-weight", "bold")
+    .style("font-size", "11px")
+    .text(d => `${d.data.name} (Méd: ${d3.format(",.0f")(d.value / d.children.length)}$)`);
+
+  // 9. Sub-blocos (Folhas por Idade)
+  const leaf = svg.selectAll("g.leaf")
+    .data(root.leaves())
+    .enter()
+    .append("g")
+    .attr("class", "leaf")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+  leaf.append("rect")
+    .attr("width", d => Math.max(0, d.x1 - d.x0))
+    .attr("height", d => Math.max(0, d.y1 - d.y0))
+    .attr("fill", d => cardColors[d.data.topCard] || "#94a3b8")
+    .attr("stroke", "#ffffff")
+    .attr("stroke-width", 1)
+    .attr("rx", 2)
+    .style("cursor", "pointer")
+    .on("mouseover", function(event, d) {
+      d3.select(this).attr("stroke", "#0f172a").attr("stroke-width", 2);
+      tooltip.style("visibility", "visible")
+        .html(`
+          <strong>Profissão:</strong> ${d.parent.data.name}<br/>
+          <strong>Idade:</strong> ${d.data.name}<br/>
+          <strong>Gasto Médio:</strong> ${d3.format(",.2f")(d.data.value)} $<br/>
+          <strong>Cartão Mais Comum:</strong> <span style="color:${cardColors[d.data.topCard]}; font-weight:bold;">${d.data.topCard}</span><br/>
+          <strong>Volume:</strong> ${d.data.count} clientes
+        `);
+    })
+    .on("mousemove", function(event) {
+      tooltip.style("top", (event.pageY - 10) + "px")
+             .style("left", (event.pageX + 10) + "px");
+    })
+    .on("mouseout", function() {
+      d3.select(this).attr("stroke", "#ffffff").attr("stroke-width", 1);
+      tooltip.style("visibility", "hidden");
+    });
+
+  // 10. Labels com tratamento de tamanho da caixa
+  leaf.append("text")
+    .attr("x", 4)
+    .attr("y", 14)
+    .style("fill", "#ffffff")
+    .style("font-weight", "bold")
+    .style("font-size", d => (d.x1 - d.x0 > 45 && d.y1 - d.y0 > 25) ? "10px" : "8px")
+    .text(d => (d.x1 - d.x0 > 30 && d.y1 - d.y0 > 18) ? d.data.name : "");
+
+  leaf.append("text")
+    .attr("x", 4)
+    .attr("y", 27)
+    .style("fill", "#f8fafc")
+    .style("font-size", "9px")
+    .text(d => (d.x1 - d.x0 > 50 && d.y1 - d.y0 > 35) ? d.data.topCard : "");
+
+  leaf.append("text")
+    .attr("x", 4)
+    .attr("y", 39)
+    .style("fill", "#e2e8f0")
+    .style("font-size", "8.5px")
+    .text(d => (d.x1 - d.x0 > 55 && d.y1 - d.y0 > 48) ? `${d3.format(".2s")(d.data.value)}$` : "");
 }
