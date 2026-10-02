@@ -9,9 +9,9 @@ d3.csv("data/synthetic_credit_card_customer_behavior_dataset.csv", d3.autoType)
 
     // Initialisation des graphiques
     initChart1(globalData);
-    // initChart2(globalData);
-    // initChart3(globalData);
-    // initChart4(globalData);
+    initChart2(globalData);
+    initChart3(globalData);
+    initChart4(globalData);
   })
   .catch(error => {
     console.error("Erreur lors du chargement des données :", error);
