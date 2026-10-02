@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banque X — Tableau de bord Comportement Clients</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- D3.js v7 CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Analyse Comportementale des Cartes de Crédit</h1>
+    <p>Tableau de bord décisionnel à destination de la Direction Risques et Marketing</p>
+  </header>
+
+  <main class="dashboard-grid">
+    <!-- Graphique 1 -->
+    <section class="card">
+      <h2>1. Profil des Clients & Types de Cartes</h2>
+      <div id="filter-container-1"></div>
+      <div id="chart-profile"></div>
+    </section>
+
+    <!-- Graphique 2 -->
+    <section class="card">
+      <h2>2. Répartition des Dépenses par Catégorie</h2>
+      <div id="filter-container-2"></div>
+      <div id="chart-spending"></div>
+    </section>
+
+    <!-- Graphique 3 -->
+    <section class="card">
+      <h2>3. Matrice de Risque de Crédit</h2>
+      <div id="chart-risk"></div>
+    </section>
+
+    <!-- Graphique 4 -->
+    <section class="card">
+      <h2>4. Engagement App & Programmes de Fidélité</h2>
+      <div id="chart-loyalty"></div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/chart1_profile.js"></script>
+  <script src="js/chart2_spending.js"></script>
+  <script src="js/chart3_risk.js"></script>
+  <script src="js/chart4_loyalty.js"></script>
+</body>
+</html>
