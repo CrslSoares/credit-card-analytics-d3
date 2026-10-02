@@ -12,31 +12,37 @@
   <header>
     <h1>Analyse Comportementale des Cartes de Crédit</h1>
     <p>Tableau de bord décisionnel à destination de la Direction Risques et Marketing</p>
+    <nav class="chart-navigation" aria-label="Navigation des graphiques">
+      <a href="#profil" data-page-link>Profil clients</a>
+      <a href="#depenses" data-page-link>Dépenses</a>
+      <a href="#risque" data-page-link>Risque de crédit</a>
+      <a href="#fidelite" data-page-link>Engagement & fidélité</a>
+    </nav>
   </header>
 
-  <main class="dashboard-grid">
+  <main class="page-content">
     <!-- Graphique 1 -->
-    <section class="card">
+    <section class="card chart-page" id="profil">
       <h2>1. Profil des Clients & Types de Cartes</h2>
       <div id="filter-container-1"></div>
       <div id="chart-profile"></div>
     </section>
 
     <!-- Graphique 2 -->
-    <section class="card">
+    <section class="card chart-page" id="depenses" hidden>
       <h2>2. Répartition des Dépenses par Catégorie</h2>
       <div id="filter-container-2"></div>
       <div id="chart-spending"></div>
     </section>
 
     <!-- Graphique 3 -->
-    <section class="card">
+    <section class="card chart-page" id="risque" hidden>
       <h2>3. Matrice de Risque de Crédit</h2>
       <div id="chart-risk"></div>
     </section>
 
     <!-- Graphique 4 -->
-    <section class="card">
+    <section class="card chart-page" id="fidelite" hidden>
       <h2>4. Engagement App & Programmes de Fidélité</h2>
       <div id="chart-loyalty"></div>
     </section>
