@@ -115,6 +115,45 @@
     <section class="card chart-page" id="risque" hidden>
       <h2>3. Matrice de Risque de Crédit</h2>
       <div id="chart-risk"></div>
+      <section class="card">
+  <!-- Bloc d'impact Business & Pertinence Métier -->
+  <div class="business-impact-card">
+    <h3>💡 Actions Stratégiques & Opérationnelles</h3>
+
+    <!-- Point 1 -->
+    <div class="impact-item">
+      <h4>1. Restructuration Proactive & Réduction des Impayés</h4>
+      <p><strong>Constat :</strong> La matrice croise la dépense mensuelle (<code>Monthly_Spending</code>) et le ratio de remboursement (<code>Payment_Ratio</code>), ce qui permet d'isoler instantanément les clients situés dans la zone de vulnérabilité (<code>Payment_Ratio</code> &le; 30 %) et de les associér au volume réel de dette engagée (taille de la bulle) ainsi qu'au score de crédit (couleur).</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Notifications préventives in-app :</strong> Déclencher des alertes automatisées proposant un étalement personnalisé des mensualités avant échéance pour limiter le risque de défaut de paiement.</li>
+        <li><strong>Consolidation de dette :</strong> Proposer des options de micro-crédit ou des solutions de refinancement à taux réajusté afin de remplacer des crédits renouvelables coûteux par des échéances stables et prévisibles.</li>
+      </ul>
+    </div>
+
+    <!-- Point 2 -->
+    <div class="impact-item">
+      <h4>2. Plafonnement Dynamique des Limites & Gestion du Risque</h4>
+      <p><strong>Constat :</strong> Le filtre dynamique par score de crédit maximal ajuste le compteur de clients vulnérables en temps réel, en mettant en avant les profils combinant forte utilisation du découvert/crédit et historique de paiement fragile.</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Pilotage automatique du risque :</strong> Ajuster et réduire progressivement les plafonds de retrait d'espèces (<code>Cash_Advance_Amount</code>) et les autorisations de dépenses des profils très exposés, sans bloquer leurs opérations essentielles au quotidien.</li>
+        <li><strong>Optimisation des provisions :</strong> Rationaliser l'allocation de capital et les provisions pour créances douteuses grâce à un comptage précis et dynamique des clients en zone critique.</li>
+      </ul>
+    </div>
+
+    <!-- Point 3 -->
+    <div class="impact-item">
+      <h4>3. Éducation Financière Hyper-Personnalisée & Engagement</h4>
+      <p><strong>Constat :</strong> Le graphique visualise la transition entre les profils sains (forts remboursants / scores élevés) et les clients sous pression financière (faibles remboursants / scores dégradés).</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Parcours d'accompagnement in-app :</strong> Recommander des modules ludiques de gestion budgétaire dans l'application mobile pour les utilisateurs situés en zone d'alerte, tout en récompensant leur assainissement financier par des avantages progressifs.</li>
+        <li><strong>Up-sell ciblé pour les profils sains :</strong> Pour le segment affichant un taux de remboursement élevé (&gt; 60 %) et un faible risque, automatiser les propositions de rehaussement de plafond de crédit (<code>Credit_Limit</code>) ainsi que l'accès à des services premium.</li>
+      </ul>
+    </div>
+  </div>
+</section>
     </section>
 
     <!-- Graphique 4 -->

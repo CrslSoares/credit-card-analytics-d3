@@ -22,24 +22,7 @@ Déterminer le format et le timing optimal des campagnes promotionnelles en segm
 
 ---
 
-## 2. Matrice de Risque Crédit & Détection Préventive (Credit Risk Zone)
-
-### 🎯 Objectif Marketing & Financier
-Anticiper le risque de défaut d'impayé en cartographiant l'utilisation de la ligne de crédit par rapport au comportement de remboursement. Permet de protéger la marge tout en adaptant les offres d'accompagnement financier.
-
-### 📐 Définition de la Zone à Risque (Risk Zone)
-* **Critères d'Alerte :** Taux d'utilisation du crédit $\ge$ 80 % **ET** Ratio de paiement mensuel $\le$ 40 %.
-* **Volume Identifié :** 321 clients (0,6 % du portefeuille global) sur un échantillon affiché de 3 000 points.
-* **Score de Crédit Moyen :** **429** pour le segment à risque (vs **629** pour la moyenne globale du portefeuille).
-
-### 💡 Actions Marketing & Opérationnelles
-* **Restructuration Proactive :** Notifications in-app proposant un étalement personnalisé des mensualités ou une option de micro-crédit de consolidation.
-* **Plafonnement Dynamique :** Réduction graduelle et automatique des plafonds de retrait d'espèces sans bloquer les paiements essentiels.
-* **Outils d'Éducation Financière :** Pousser des modules de gestion budgétaire au sein du parcours App Mobile pour restaurer le score de crédit.
-
----
-
-## 3. Étude de Fidélité & Rétention Client (Loyalty & Engagement)
+## 2. Étude de Fidélité & Rétention Client (Loyalty & Engagement)
 
 ### 🎯 Objectif Marketing
 Mesurer l'attachement à la marque et l'efficacité des programmes de fidélisation pour réduire le taux de churn (attrition) et maximiser la Customer Lifetime Value (LTV).
@@ -51,3 +34,5 @@ Mesurer l'attachement à la marque et l'efficacité des programmes de fidélisat
 ### 💡 Stratégies d'Activation
 * **Programme de Gamification :** Défis mensuels sur l'App (ex: "Effectuez 5 paiements sans contact ce mois-ci") pour débloquer des points de fidélité ou du cashback.
 * **Avantages Partenaires Personnalisés :** Recommandations d'offres partenaires basées sur l'historique réel de consommation (Cinéma, Restauration, Voyages).
+
+## 3. Heat Map de Correlation das variáveis
