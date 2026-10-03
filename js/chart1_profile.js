@@ -1,27 +1,27 @@
 function initChart1(data) {
-  // 1. Seleção dos contêineres conforme os IDs do seu index.html
+  // 1. Sélection des conteneurs selon les IDs du fichier index.html
   const container = d3.select("#chart-profile");
   const filterContainer = d3.select("#filter-container-1");
 
-  // Limpeza
+  // Nettoyage
   container.html("");
   filterContainer.html("");
 
-  // Dimensions do SVG
+  // Dimensions du SVG
   const margin = { top: 35, right: 10, bottom: 10, left: 10 };
   const width = 850 - margin.left - margin.right;
   const height = 500 - margin.top - margin.bottom;
 
-  // 2. Cores personalizadas por tipo de cartão
+  // 2. Couleurs personnalisées par type de carte
   const cardColors = {
-    "Basic": "#94a3b8",      // Cinza
-    "Silver": "#38bdf8",     // Azul claro
-    "Gold": "#f59e0b",       // Dourado
-    "Platinum": "#8b5cf6",   // Roxo
-    "Signature": "#d97706"   // Laranja escuro / Ambar
+    "Basic": "#94a3b8",      // Gris
+    "Silver": "#38bdf8",     // Bleu clair
+    "Gold": "#f59e0b",       // Doré
+    "Platinum": "#8b5cf6",   // Violet
+    "Signature": "#d97706"   // Ambre / Orange foncé
   };
 
-  // 3. Legenda Superior no filtro
+  // 3. Légende supérieure dans le conteneur de filtre
   const legend = filterContainer.append("div")
     .style("display", "flex")
     .style("gap", "15px")
@@ -32,7 +32,7 @@ function initChart1(data) {
   legend.append("span")
     .style("font-weight", "bold")
     .style("font-size", "13px")
-    .text("Tipo de Cartão mais Frequente: ");
+    .text("Type de carte le plus fréquent : ");
 
   Object.entries(cardColors).forEach(([card, color]) => {
     const item = legend.append("div")
@@ -51,13 +51,13 @@ function initChart1(data) {
       .text(card);
   });
 
-  // 4. Processamento dos Dados (Occupation -> Age -> Avg Spending + Mode Card)
+  // 4. Traitement des données (Profession -> Âge -> Dépense moyenne + Carte dominante)
   const groupedData = d3.rollup(
     data,
     v => {
       const avgSpending = d3.mean(v, d => d.Monthly_Spending) || 0;
       
-      // Encontrar o tipo de cartão mais comum
+      // Trouver le type de carte le plus fréquent (mode)
       const cardCounts = d3.rollup(v, c => c.length, d => d.Card_Type);
       let topCard = "Basic";
       let maxCount = -1;
@@ -78,13 +78,13 @@ function initChart1(data) {
     d => d.Age
   );
 
-  // 5. Estruturação Hierárquica para d3.hierarchy
+  // 5. Structuration hiérarchique pour d3.hierarchy
   const hierarchyData = {
     name: "Occupations",
     children: Array.from(groupedData, ([occupation, ageMap]) => ({
       name: occupation,
       children: Array.from(ageMap, ([age, metrics]) => ({
-        name: `${age} anos`,
+        name: `${age} ans`,
         age: age,
         value: metrics.avgSpending,
         topCard: metrics.topCard,
@@ -93,7 +93,7 @@ function initChart1(data) {
     }))
   };
 
-  // 6. Layout do Treemap
+  // 6. Configuration du layout Treemap
   const root = d3.hierarchy(hierarchyData)
     .sum(d => d.value)
     .sort((a, b) => b.value - a.value);
@@ -105,7 +105,7 @@ function initChart1(data) {
     .paddingInner(2)
     .tile(d3.treemapBinary)(root);
 
-  // 7. SVG
+  // 7. Création du conteneur SVG
   const svg = container.append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -129,7 +129,7 @@ function initChart1(data) {
       .style("z-index", "1000");
   }
 
-  // 8. Categoria Principal (Group Occupation Header)
+  // 8. En-tête des catégories principales (Groupes Profession)
   const node = svg.selectAll("g.occupation-group")
     .data(root.descendants().filter(d => d.depth === 1))
     .enter()
@@ -149,9 +149,9 @@ function initChart1(data) {
     .style("fill", "#f8fafc")
     .style("font-weight", "bold")
     .style("font-size", "11px")
-    .text(d => `${d.data.name} (Méd: ${d3.format(",.0f")(d.value / d.children.length)}$)`);
+    .text(d => `${d.data.name} (Moy. : ${d3.format(",.0f")(d.value / d.children.length)} $)`);
 
-  // 9. Sub-blocos (Folhas por Idade)
+  // 9. Sous-blocs (Feuilles par tranche d'âge)
   const leaf = svg.selectAll("g.leaf")
     .data(root.leaves())
     .enter()
@@ -171,11 +171,11 @@ function initChart1(data) {
       d3.select(this).attr("stroke", "#0f172a").attr("stroke-width", 2);
       tooltip.style("visibility", "visible")
         .html(`
-          <strong>Profissão:</strong> ${d.parent.data.name}<br/>
-          <strong>Idade:</strong> ${d.data.name}<br/>
-          <strong>Gasto Médio:</strong> ${d3.format(",.2f")(d.data.value)} $<br/>
-          <strong>Cartão Mais Comum:</strong> <span style="color:${cardColors[d.data.topCard]}; font-weight:bold;">${d.data.topCard}</span><br/>
-          <strong>Volume:</strong> ${d.data.count} clientes
+          <strong>Profession :</strong> ${d.parent.data.name}<br/>
+          <strong>Âge :</strong> ${d.data.name}<br/>
+          <strong>Gasto Moyen :</strong> ${d3.format(",.2f")(d.data.value)} $<br/>
+          <strong>Carte la plus commune :</strong> <span style="color:${cardColors[d.data.topCard]}; font-weight:bold;">${d.data.topCard}</span><br/>
+          <strong>Volume :</strong> ${d.data.count} clients
         `);
     })
     .on("mousemove", function(event) {
@@ -187,7 +187,7 @@ function initChart1(data) {
       tooltip.style("visibility", "hidden");
     });
 
-  // 10. Labels com tratamento de tamanho da caixa
+  // 10. Libellés dynamiques ajustés à la taille des rectangles
   leaf.append("text")
     .attr("x", 4)
     .attr("y", 14)
