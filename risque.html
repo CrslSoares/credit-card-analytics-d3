@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui présente un risque ? · Cartes de crédit</title>
+<meta name="description" content="Chapitre 3 : ce qui explique le score de crédit de 50 000 porteurs de carte, zone à risque, modèle et simulateur.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html" aria-current="page"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html">Méthode</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="chapter-head">
+    <p class="kicker">Chapitre 3 sur 4</p>
+    <h1>Qui présente un risque&#8239;?</h1>
+    <p class="lead">Le score de crédit se lit presque entièrement sur deux comportements&#8239;: la part de sa facture que le client rembourse, et la part de son plafond qu’il utilise. La carte, le revenu ou la profession n’y changent presque rien.</p>
+    <div class="panel contexte" style="margin-top:24px;max-width:72ch">
+      <p class="kicker" style="margin:0 0 8px">La demande des risques</p>
+      <p style="margin:0">Aujourd’hui, le service risques signale un client dès qu’il utilise plus de 60&#8239;% de son plafond et rembourse moins de la moitié de sa facture. La règle a un avantage&#8239;: elle s’explique en une phrase aux conseillers. Mais l’équipe a l’impression qu’elle réagit trop tard pour certains clients, et voudrait savoir si cette impression est fondée. Elle se demande aussi s’il faut surveiller de plus près certaines cartes ou certaines professions. Dans ce chapitre, on parle de client fragile quand le score est inférieur à 550.</p>
+    </div>
+  </header>
+
+  <div class="filters" role="region" aria-label="Filtres">
+    <div class="inner" id="filtres"></div>
+  </div>
+
+  <!-- A. Zone à risque -->
+  <section class="section" aria-labelledby="t-a">
+    <div class="section-head">
+      <h2 id="t-a">La zone à risque&#8239;: forte utilisation, faible remboursement</h2>
+      <p class="dek">Chaque client est placé selon la part de son plafond qu’il utilise (horizontal) et la part de sa facture qu’il rembourse (vertical)&#8239;; la couleur donne son score. Déplacez les seuils, changez de frontière, ou sélectionnez une zone à la souris.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-1" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="toolbar">
+      <div id="vue-a"></div>
+      <div class="control">Frontière <div id="frontiere"></div></div>
+    </div>
+    <div class="toolbar" style="margin-top:4px">
+      <label class="control" id="ctl-u">Utilisation &gt; <input type="range" id="seuil-u" min="30" max="90" step="5" value="60"><output for="seuil-u" id="out-u">60&#8239;%</output></label>
+      <label class="control" id="ctl-p">Remboursement &lt; <input type="range" id="seuil-p" min="20" max="90" step="5" value="50"><output for="seuil-p" id="out-p">50&#8239;%</output></label>
+      <label class="control" id="ctl-s" hidden>Score prédit &lt; <input type="range" id="seuil-s" min="480" max="660" step="10" value="550"><output for="seuil-s" id="out-s">550</output></label>
+    </div>
+    <div class="legend" id="leg-a"></div>
+    <div class="fig-grid">
+      <figure class="figure"><div class="chart" id="chart-a"></div></figure>
+      <aside class="panel" id="panel-a" aria-live="polite"></aside>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> la zone «&#8239;utilisation &gt; 60&#8239;% et remboursement &lt; 50&#8239;%&#8239;» regroupe 3,5&#8239;% des clients, dont le score moyen est de 469 contre 635 pour les autres. Elle ne contient pourtant qu’un quart des scores faibles (inférieurs à 550)&#8239;: les lignes grises montrent que le score baisse en diagonale, pas en carré.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres. En vue «&#8239;Clients&#8239;», 4&nbsp;000 clients tirés au hasard sont dessinés (taille du point&#8239;: solde impayé)&#8239;; les statistiques du panneau portent sur tous les clients retenus.</p>
+    </div>
+    <details class="more" data-table="t-a"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-1"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Utilisation du plafond</th><td>Quantitative</td><td>Position horizontale</td><td class="c">1</td></tr>
+<tr><th scope="row">Taux de remboursement</th><td>Quantitative</td><td>Position verticale</td><td class="c">1</td></tr>
+<tr><th scope="row">Score de crédit</th><td>Quantitative</td><td>Couleur divergente (luminosité et teinte)</td><td class="c">6</td></tr>
+<tr><th scope="row">Solde impayé</th><td>Quantitative</td><td>Taille du point</td><td class="c">4</td></tr>
+<tr><th scope="row">Zone à risque</th><td>Nominale (dedans ou dehors)</td><td>Fond rouge, contour et icône</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Les deux comportements expliquent le score. Ils prennent donc les deux positions. La couleur est moins précise pour le score. Elle est complétée par la vue «&#8239;Score moyen&#8239;», par les lignes d’iso-score et par le tableau.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Un graphique en 3D créerait des occlusions. Les 50&nbsp;000 points bruts satureraient l’affichage. D’où l’échantillon de 4&nbsp;000 points et la carte de chaleur. Une zone rectangulaire seule serait trompeuse (voir la précision et le rappel).</td></tr>
+<tr><th scope="row">Couleurs</th><td>Échelle divergente du rouge au bleu en passant par le gris. Elle est centrée sur la moyenne de 629. Le gris efface les clients ordinaires. Le couple rouge et bleu reste distinct pour les daltoniens. La zone à risque ne repose jamais sur la couleur seule.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">L’impression de l’équipe était juste. La règle actuelle se trompe rarement, mais elle laisse passer la plupart des clients fragiles. Prenons un client qui utilise 50&#8239;% de son plafond et ne rembourse que 40&#8239;% de sa facture&#8239;: il ne franchit aucun des deux seuils, et pourtant son score tombe sous 550. Le bouton «&#8239;Diagonale&#8239;» permet de comparer les deux règles. Pour tracer cette nouvelle frontière, il faut d’abord mesurer le poids de chaque comportement.</p>
+  </section>
+
+  <!-- B. Modèle -->
+  <section class="section" aria-labelledby="t-b">
+    <div class="section-head">
+      <h2 id="t-b">Deux comportements expliquent 95&#8239;% du score</h2>
+      <p class="dek">Effet de chaque variable sur le score, estimé par une régression linéaire sur les 50&nbsp;000 clients (indépendante des filtres). À droite, le simulateur applique ce modèle à un client fictif.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-2" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="fig-split">
+      <div>
+        <h3>Effet sur le score, toutes choses égales par ailleurs</h3>
+        <p class="sub">En points de score&#8239;; bleu&#8239;: le score monte, rouge&#8239;: il baisse.</p>
+        <div class="chart" id="chart-b"></div>
+        <p class="sub" id="r2" style="margin-top:12px"></p>
+      </div>
+      <div class="panel" id="simulateur">
+        <h3>Simulateur de score</h3>
+        <p style="margin:0 0 12px">Réglez le profil d’un client fictif.</p>
+        <div id="sim-controls" style="display:grid;gap:10px"></div>
+        <div style="margin-top:16px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <span class="big" id="sim-score">—</span>
+          <span id="sim-rang"></span>
+        </div>
+        <div class="chart" id="chart-sim" style="margin-top:6px"></div>
+        <p class="hint" id="sim-statut"></p>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> à profil égal par ailleurs, rembourser 10 points de facture en plus fait gagner 22 points de score&#8239;; utiliser 10 points de plafond en plus en fait perdre 20. Recourir aux avances d’espèces coûte 10 points.</p>
+      <p><b>Champ&#8239;:</b> 50&nbsp;000 clients&#8239;; modèle linéaire estimé par les moindres carrés (voir la page Méthode).</p>
+    </div>
+    <details class="more" data-table="t-b"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-2"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Effet sur le score</th><td>Quantitative (signée)</td><td>Longueur depuis zéro</td><td class="c">2</td></tr>
+<tr><th scope="row">Variable du modèle</th><td>Nominale</td><td>Position verticale, une ligne par variable</td><td class="c">1</td></tr>
+<tr><th scope="row">Sens de l’effet</th><td>Nominale</td><td>Côté gauche ou droit (position), doublé de la teinte</td><td class="c">1 (position), 2 (teinte)</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Des barres divergentes exprimées en effets concrets, par exemple «&#8239;+10 points de remboursement&#8239;». Le simulateur applique le même modèle à un client fictif.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Un tableau de coefficients bruts mélangerait des unités incomparables. Des coefficients standardisés seraient comparables mais trop abstraits pour un public non statisticien.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Les mêmes pôles que l’échelle du score. Bleu quand le score monte et rouge quand il baisse.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Ce score se calcule chaque mois avec des données que la banque a déjà. Le simulateur pourrait même servir en agence&#8239;: un conseiller y montrerait à un client ce qu’il gagnerait à rembourser un peu plus. Il reste la seconde question du service&#8239;: faut-il surveiller certains clients de plus près que d’autres&#8239;?</p>
+  </section>
+
+  <!-- C. Corrélations et cartes -->
+  <section class="section" aria-labelledby="t-c">
+    <div class="section-head">
+      <h2 id="t-c">Ni le revenu ni la carte ne protègent</h2>
+      <p class="dek">Corrélations entre les variables financières (cliquez sur une case pour voir le nuage de points correspondant), puis score moyen par carte avant et après prise en compte du comportement.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-3" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-c"></div>
+    <div class="fig-grid wide-side">
+      <figure class="figure"><div class="chart" id="chart-c"></div></figure>
+      <div>
+        <h3 id="pair-title" style="font-size:1rem;font-weight:620;margin:4px 0 2px"></h3>
+        <p id="pair-sub" style="font-size:14px;color:var(--ink-2);margin:0 0 4px"></p>
+        <div class="chart" id="chart-pair"></div>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> le score est fortement lié au remboursement (+0,77) et à l’utilisation du plafond (−0,60), et presque pas au revenu (+0,03) ni à la dépense (+0,03).</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres (coefficients de Pearson)&#8239;; nuage tiré de l’échantillon aléatoire de 3&nbsp;000 clients.</p>
+    </div>
+    <details class="more" data-table="t-c"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-3"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Paire de variables</th><td>Nominale</td><td>Position (ligne et colonne)</td><td class="c">1</td></tr>
+<tr><th scope="row">Coefficient de corrélation</th><td>Quantitative (signée, de −1 à +1)</td><td>Couleur divergente, doublée du chiffre écrit</td><td class="c">6</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Une matrice triangulaire. La couleur repère les liens forts et le chiffre permet de les lire exactement. Un clic sur une case affiche le nuage de points correspondant.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Une matrice de 10 × 10 nuages serait illisible. Le nuage unique sert à vérifier qu’une corrélation proche de zéro ne cache pas une relation non linéaire.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Même divergente que le score. Bleu pour un lien positif et rouge pour un lien négatif. Le gris signale l’absence de lien. La ligne «&#8239;Score&#8239;» est encadrée.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+
+    <div style="margin-top:56px" class="fig-split">
+      <div>
+        <h3>Le petit avantage des cartes haut de gamme s’explique par l’étranger</h3>
+        <p class="sub">Score moyen observé, puis à remboursement, utilisation et transactions internationales égaux. 50&nbsp;000 clients, indépendant des filtres.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-4" data-methode>Voir la méthode de ce graphique ↓</a></p>
+        <div class="legend" id="leg-c2"></div>
+        <div class="chart" id="chart-c2"></div>
+      </div>
+      <div class="fig-notes" style="margin-top:44px">
+        <p><b>Lecture&#8239;:</b> les clients Signature ont un score moyen de 637, soit 8 points de plus que l’ensemble. Ils font aussi 7,9 transactions internationales en moyenne, chacune associée à +2 points de score. Une fois ce facteur pris en compte, l’écart entre cartes tombe sous 2 points.</p>
+        <p><b>Méthode&#8239;:</b> le score «&#8239;à comportement égal&#8239;» est la moyenne des résidus d’une régression du score sur le remboursement, l’utilisation et les transactions internationales, à laquelle on ajoute la moyenne générale.</p>
+      </div>
+    </div>
+    <details class="more" data-table="t-c2"><summary>Voir les données du score par carte</summary><div class="body"></div></details>
+    <details class="more why" id="methode-4"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Score moyen observé</th><td>Quantitative</td><td>Position</td><td class="c">1</td></tr>
+<tr><th scope="row">Score à comportement égal</th><td>Quantitative</td><td>Position</td><td class="c">1</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Position verticale</td><td class="c">1</td></tr>
+<tr><th scope="row">Observé ou ajusté</th><td>Nominale</td><td>Forme (cercle vide ou plein)</td><td class="c">6</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Des haltères relient les deux moyennes de chaque carte. La longueur du segment donne l’écart. L’axe va de 620 à 642 pour rendre visibles des écarts de quelques points.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Des barres groupées imposeraient un axe partant de zéro. Des écarts de 8 points sur 637 deviendraient invisibles.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Le point plein prend la couleur de sa carte et le cercle vide reste neutre. Le trait gris marque la moyenne générale.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+  </section>
+
+  <section class="takeaways" aria-labelledby="t-retenir">
+    <div class="box">
+      <h2 id="t-retenir">Ce qu’il faut retenir</h2>
+      <div class="items">
+        <p><strong>Le score est une affaire de comportement.</strong> Le taux de remboursement et l’utilisation du plafond expliquent 95&#8239;% de ses variations (R² = 0,95). Dix points de remboursement en plus valent environ 22 points de score, dix points d’utilisation en plus en coûtent 20.</p>
+        <p><strong>La zone à risque «&#8239;en carré&#8239;» est trop étroite.</strong> Elle ne contient que des scores faibles (précision de 99,9&#8239;%), mais seulement 25&#8239;% d’entre eux. Une frontière diagonale tirée du modèle en capte 89&#8239;%, avec une précision de 90&#8239;%.</p>
+        <p><strong>Ni le revenu, ni la carte, ni la profession ne protègent.</strong> Leurs liens avec le score ne dépassent pas 0,05 (corrélation ou rapport de corrélation). Les 8 points d’avance des clients Signature viennent de leurs transactions internationales, pas de leur carte.</p>
+        <p><strong>Piste métier.</strong> Suivre chaque mois le taux de remboursement et l’utilisation du plafond, et déclencher les alertes sur le score prédit plutôt que sur deux seuils fixes.</p>
+      </div>
+      <div class="limits">
+        <p><strong>Limites.</strong> Le score est une variable du jeu de données, pas un défaut de paiement observé&#8239;: on étudie ce qui explique le score, pas le risque réel. Le modèle décrit des associations, pas des causes, et le seuil de 550 pour un «&#8239;score faible&#8239;» est une convention de ce projet (13,6&#8239;% des clients).</p>
+      </div>
+    </div>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Le score ne doit presque rien au profil du client&#8239;: la banque ne peut donc agir que sur son comportement. C’est justement ce que l’équipe de l’application pense pouvoir faire.</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Chapitres précédent et suivant">
+    <a href="depenses.html"><small>Chapitre 2</small><strong>Comment dépensent-ils&#8239;?</strong></a>
+    <a class="next" href="engagement.html"><small>Chapitre 4</small><strong>L’application fidélise-t-elle&#8239;?</strong></a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Source&#8239;: credit.csv, 50&nbsp;000 clients, calculs des auteurs. <a href="methodologie.html">Méthode et limites</a></p>
+</footer>
+
+<script src="assets/js/d3.v7.min.js"></script>
+<script src="data/donnees.js"></script>
+<script src="assets/js/commun.js"></script>
+<script src="assets/js/risque.js"></script>
+<script>
+/* Lien « Voir la méthode » : ouvre le volet du graphique et le fait défiler à l'écran. */
+(function(){
+  function ouvrir(id, defiler){
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== "DETAILS") return false;
+    d.open = true;
+    if (defiler) {
+      var calme = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      d.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+      var s = d.querySelector("summary"); if (s) s.focus({preventScroll: true});
+    }
+    return true;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-methode]");
+    if (!a) return;
+    if (ouvrir(a.getAttribute("href").slice(1), true)) {
+      e.preventDefault();
+      try { history.replaceState(null, "", a.getAttribute("href")); } catch(_) {}
+    }
+  });
+  if (location.hash) ouvrir(location.hash.slice(1), false);
+})();
+</script>
+</body>
+</html>

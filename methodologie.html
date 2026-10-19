@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Méthode et données · Cartes de crédit</title>
+<meta name="description" content="Annexe méthodologique : jeu de données, préparation, méthodes statistiques, choix des graphiques, accessibilité et limites.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-sans-donnees>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html" aria-current="page">Méthode</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="chapter-head">
+    <p class="kicker">Annexe</p>
+    <h1>Méthode et données</h1>
+    <p class="lead">D’où viennent les chiffres, comment ils ont été calculés, pourquoi chaque graphique a cette forme, et ce que ces données ne permettent pas de conclure.</p>
+  </header>
+
+  <div class="prose">
+    <section aria-labelledby="m-jeu">
+      <h2 id="m-jeu">Le jeu de données</h2>
+      <p>Le fichier <code>credit.csv</code> décrit <strong>50&nbsp;000 clients</strong> d’une banque, à raison d’une ligne par client et de <strong>30 variables</strong>&#8239;: profil (âge, genre, profession, revenu), carte (type, plafond, ancienneté), dépenses (total et sept catégories), crédit (solde, remboursement, utilisation, avances d’espèces, mensualités), fidélité (points) et usage de l’application mobile, plus un score de crédit. Il ne contient <strong>aucune valeur manquante</strong>.</p>
+      <p>La devise n’est pas précisée. Le vocabulaire (EMI, pour <em lang="en">Equated Monthly Installment</em>) et les ordres de grandeur suggèrent un contexte indien, donc des roupies&#8239;: les montants sont affichés sans unité. Les données décrivent un instant donné, sans date&#8239;: aucune évolution dans le temps n’est étudiée.</p>
+
+      <h3>Contrôles de cohérence effectués</h3>
+      <ul>
+        <li>La somme des sept catégories de dépense est égale à la dépense mensuelle, au centime près, pour les 50&nbsp;000 clients.</li>
+        <li>Le taux de remboursement est exactement le montant remboursé divisé par le montant du relevé.</li>
+        <li>L’utilisation du plafond correspond au solde impayé divisé par le plafond (écart inférieur à 3 points).</li>
+        <li>Le nombre de transactions multiplié par le panier moyen redonne la dépense mensuelle à ±5&#8239;% près.</li>
+      </ul>
+
+      <h3>Dictionnaire des variables</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Variable</th><th scope="col">Signification</th><th scope="col">Valeurs</th><th scope="col">Utilisée dans</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Customer_ID</th><td>Identifiant du client</td><td>CC100000 à CC149999</td><td>–</td></tr>
+            <tr><th scope="row">Age</th><td>Âge</td><td>18 à 70 ans</td><td>Profil</td></tr>
+            <tr><th scope="row">Gender</th><td>Genre</td><td>F, M</td><td>Profil, filtres</td></tr>
+            <tr><th scope="row">Occupation</th><td>Profession (6 modalités)</td><td>Étudiant, retraité, salarié du privé, fonctionnaire, indépendant, chef d’entreprise</td><td>Profil, filtres</td></tr>
+            <tr><th scope="row">Annual_Income</th><td>Revenu annuel</td><td>100&nbsp;050 à 7&nbsp;995&nbsp;831</td><td>Profil, Accueil</td></tr>
+            <tr><th scope="row">Card_Type</th><td>Type de carte, du bas au haut de gamme</td><td>Basic, Silver, Gold, Platinum, Signature</td><td>Toutes les pages</td></tr>
+            <tr><th scope="row">Credit_Limit</th><td>Plafond de crédit</td><td>16&nbsp;000 à 6&nbsp;591&nbsp;000</td><td>Profil</td></tr>
+            <tr><th scope="row">Card_Age_Months</th><td>Ancienneté de la carte (mois)</td><td>1 à 240</td><td>Risque</td></tr>
+            <tr><th scope="row">Monthly_Spending</th><td>Dépense mensuelle (somme des 7 catégories)</td><td>2&nbsp;236 à 691&nbsp;688</td><td>Dépenses, Engagement</td></tr>
+            <tr><th scope="row">Monthly_Transactions</th><td>Transactions par mois</td><td>15 à 179</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Avg_Transaction_Value</th><td>Panier moyen</td><td>58 à 10&nbsp;463</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Grocery_Spending</th><td>Courses</td><td>84 à 352&nbsp;971</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Utility_Bill_Spending</th><td>Factures</td><td>20 à 300&nbsp;192</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Online_Shopping_Spending</th><td>Achats en ligne</td><td>14 à 258&nbsp;176</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Fuel_Spending</th><td>Carburant</td><td>11 à 235&nbsp;635</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Dining_Spending</th><td>Restaurants</td><td>6 à 227&nbsp;440</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Entertainment_Spending</th><td>Loisirs</td><td>1 à 216&nbsp;730</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Travel_Spending</th><td>Voyages</td><td>0 à 213&nbsp;127</td><td>Dépenses</td></tr>
+            <tr><th scope="row">Outstanding_Balance</th><td>Solde impayé</td><td>1&nbsp;600 à 5&nbsp;789&nbsp;683</td><td>Risque</td></tr>
+            <tr><th scope="row">Statement_Balance</th><td>Montant du relevé</td><td>4&nbsp;161 à 6&nbsp;102&nbsp;803</td><td>Contrôles</td></tr>
+            <tr><th scope="row">Payment_Amount</th><td>Montant remboursé</td><td>888 à 5&nbsp;980&nbsp;747</td><td>Contrôles</td></tr>
+            <tr><th scope="row">Payment_Ratio</th><td>Taux de remboursement (remboursé ÷ relevé)</td><td>10 à 100&#8239;%</td><td>Risque</td></tr>
+            <tr><th scope="row">Credit_Utilization</th><td>Utilisation du plafond (solde ÷ plafond)</td><td>10 à 95&#8239;%</td><td>Risque, Accueil</td></tr>
+            <tr><th scope="row">Cash_Advance_Amount</th><td>Avances d’espèces (nulles pour 70&#8239;% des clients)</td><td>0 à 1&nbsp;212&nbsp;849</td><td>Risque</td></tr>
+            <tr><th scope="row">EMI_Count</th><td>Nombre de mensualités en cours</td><td>0 à 6</td><td>Risque</td></tr>
+            <tr><th scope="row">International_Transactions</th><td>Transactions internationales</td><td>0 à 14</td><td>Dépenses, Risque</td></tr>
+            <tr><th scope="row">Reward_Points_Earned</th><td>Points de fidélité gagnés</td><td>44 à 56&nbsp;341</td><td>Engagement</td></tr>
+            <tr><th scope="row">Reward_Points_Redeemed</th><td>Points de fidélité utilisés</td><td>0 à 44&nbsp;818</td><td>Engagement</td></tr>
+            <tr><th scope="row">Mobile_App_Login</th><td>Connexions à l’application (période non précisée)</td><td>2 à 71</td><td>Engagement</td></tr>
+            <tr><th scope="row">Credit_Score</th><td>Score de crédit</td><td>367 à 792</td><td>Risque, Accueil</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="m-chaine">
+      <h2 id="m-chaine">De la donnée brute au graphique</h2>
+      <div class="pipeline">
+        <div><strong>Lecture et contrôle</strong>Le script <code>scripts/prepare_data.py</code> (Python, pandas) lit le CSV et vérifie sa taille et l’absence de valeurs manquantes.</div>
+        <div><strong>Mélange et codage</strong>Les lignes sont mélangées au hasard (graine 42)&#8239;: les 3&nbsp;000 premières forment un échantillon aléatoire. Les catégories sont codées en entiers.</div>
+        <div><strong>Pré-calculs</strong>Sommes par segment pour les dépenses et les points, corrélations par combinaison de filtres, régressions du score.</div>
+        <div><strong>Calcul dans le navigateur</strong>Le fichier <code>data/donnees.js</code> est chargé par chaque page&#8239;; D3 refiltre et réagrège les 50&nbsp;000 clients à chaque changement de filtre.</div>
+      </div>
+      <p>Le choix d’un fichier JavaScript plutôt que d’un appel à <code>d3.csv()</code> est délibéré&#8239;: les navigateurs bloquent la lecture de fichiers locaux par <code>fetch</code>, ce qui obligerait à lancer un serveur. Ici, un double-clic sur <code>index.html</code> suffit. Pour régénérer les données&#8239;: <code>python scripts/prepare_data.py</code>.</p>
+    </section>
+
+    <section class="block" aria-labelledby="m-stats">
+      <h2 id="m-stats">Méthodes statistiques</h2>
+      <h3>Statistiques descriptives</h3>
+      <p>Moyennes pour les montants agrégés (dépense moyenne par client), médianes et quartiles pour les distributions très asymétriques (dépense par quintile de connexions). Les boîtes à moustaches suivent la convention de Tukey&#8239;: moustaches jusqu’à la valeur la plus éloignée située à moins de 1,5 fois l’écart interquartile.</p>
+      <h3>Corrélations</h3>
+      <p><strong>Pearson</strong> pour les liens entre variables numériques (matrice de la page Risque), <strong>Spearman</strong> (corrélation des rangs) quand une variable est ordonnée, comme le type de carte, et le <strong>rapport de corrélation η</strong> pour le lien entre la profession, qualitative, et le revenu. Une corrélation mesure une association linéaire, pas une causalité.</p>
+      <h3>Modèle du score de crédit</h3>
+      <p>Régression linéaire estimée par les moindres carrés sur les 50&nbsp;000 clients&#8239;:</p>
+      <p><code>score ≈ 546,5 + 220,0 × remboursement − 200,4 × utilisation</code>, avec R² = 0,952.</p>
+      <p>Le modèle complet ajoute les avances d’espèces (−10,0 points si le client y recourt), le nombre de mensualités (−2,2 par mensualité), l’ancienneté de la carte (+1,5 par an) et les transactions internationales (+2,0 chacune)&#8239;: R² = 0,965, erreur type de 13 points. Le remboursement et l’utilisation sont exprimés en proportion (de 0 à 1)&#8239;: +10 points de pourcentage correspondent donc à +22 et −20 points de score.</p>
+      <h3>Zone à risque, précision et rappel</h3>
+      <p>Un score est dit <strong>faible</strong> en dessous de 550 (13,6&#8239;% des clients)&#8239;; c’est une convention de ce projet. La zone «&#8239;en carré&#8239;» réunit les clients qui utilisent plus de 60&#8239;% de leur plafond et remboursent moins de 50&#8239;% de leur facture. La frontière diagonale réunit ceux dont le score prédit par le modèle est inférieur à 550.</p>
+      <p>Pour comparer les deux, on calcule la <strong>précision</strong> (part de scores faibles parmi les clients de la zone) et le <strong>rappel</strong> (part des scores faibles qui tombent dans la zone). Le carré&#8239;: précision 99,9&#8239;%, rappel 25,5&#8239;%. La diagonale&#8239;: précision 89,9&#8239;%, rappel 88,7&#8239;%.</p>
+      <h3>Score «&#8239;à comportement égal&#8239;»</h3>
+      <p>Pour chaque carte, moyenne des résidus d’une régression du score sur le remboursement, l’utilisation et les transactions internationales, à laquelle on ajoute la moyenne générale (629). C’est le score qu’aurait la carte si ses clients se comportaient comme la moyenne.</p>
+      <h3>Échantillons</h3>
+      <p>Toutes les statistiques portent sur les 50&nbsp;000 clients (ou sur ceux retenus par les filtres). Seuls les nuages de points utilisent un échantillon aléatoire, de 3&nbsp;000 clients (4&nbsp;000 pour le graphique principal de la page Risque), pour rester lisibles.</p>
+    </section>
+
+    <section class="block" aria-labelledby="m-variables">
+      <h2 id="m-variables">Variables visuelles et échelles de mesure</h2>
+      <p>Chaque graphique a été construit en deux temps. On identifie d’abord <strong>l’échelle de mesure</strong> de chaque donnée : <strong>quantitative</strong> (montant, score, effectif), <strong>ordinale</strong> (type de carte, tranche d’âge, quintile) ou <strong>nominale</strong> (profession, catégorie de dépense, genre). On choisit ensuite la <strong>variable visuelle</strong> qui la code le mieux.</p>
+      <h3>Les sept variables visuelles de Bertin</h3>
+      <p>Issues de la cartographie et de la sémiologie graphique, ce sont les leviers dont on dispose pour coder une donnée sur un plan. Le tableau rappelle leur définition et indique où chacune sert dans le projet.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <caption class="sr-only">Les sept variables visuelles de Bertin et leur usage dans le projet</caption>
+          <thead><tr><th scope="col">Variable visuelle</th><th scope="col">Description</th><th scope="col">Utilisée dans le projet</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Position</th><td>Coordonnées (x, y) d’un élément sur le plan visuel</td><td>Partout : axes, barres, nuages, matrice, nœuds du diagramme de flux</td></tr>
+            <tr><th scope="row">Taille</th><td>Dimensions d’un élément</td><td>Longueur des barres, largeur des bandes du diagramme de flux, aire des bulles et des cartes de l’accueil, taille des points (solde impayé)</td></tr>
+            <tr><th scope="row">Valeur</th><td>Quantité de noir perçue localement</td><td>Rampe « encre » des cartes, du clair au foncé ; atténuation des groupes non sélectionnés</td></tr>
+            <tr><th scope="row">Texture</th><td>Variation locale de l’échelle des éléments</td><td>Non utilisée</td></tr>
+            <tr><th scope="row">Couleur</th><td>Teinte et degré de saturation locaux</td><td>Catégories de dépense ; cartes du diagramme de flux ; pôles rouge et bleu du score ; alerte</td></tr>
+            <tr><th scope="row">Orientation</th><td>Angle local des éléments</td><td>Non utilisée</td></tr>
+            <tr><th scope="row">Forme</th><td>Combinaison des attributs de taille et d’orientation</td><td>Barre ou point dans un même graphique ; cercle vide ou plein (score observé ou ajusté) ; icône d’alerte</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source">Source : J. Bertin, <em>Sémiologie graphique</em>, 1967, d’après le support de cours « Perception et visualisation de l’information ».</p>
+
+      <h3>Les propriétés des variables visuelles</h3>
+      <p>Une variable n’est utile que si elle a la propriété que la donnée exige&#8239;:</p>
+      <ul>
+        <li><strong>Ordonnée</strong> : on perçoit spontanément un ordre (plus, moins) entre les éléments.</li>
+        <li><strong>Associative</strong> : les éléments restent perçus comme un même ensemble malgré la variation, on peut donc les regrouper.</li>
+        <li><strong>Sélective</strong> : on isole d’un coup d’œil tous les éléments d’une même catégorie.</li>
+        <li><strong>Quantitative</strong> : on peut estimer un rapport («&#8239;deux fois plus&#8239;»).</li>
+      </ul>
+      <div class="table-wrap">
+        <table class="data">
+          <caption class="sr-only">Propriétés des variables visuelles et conséquences pour le projet</caption>
+          <thead><tr><th scope="col">Variable</th><th scope="col" class="c">Ordonnée</th><th scope="col" class="c">Associative</th><th scope="col" class="c">Sélective</th><th scope="col" class="c">Quantitative</th><th scope="col">Ce qu’on en tire pour le projet</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Position</th><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td>La plus complète : elle est réservée à la question principale de chaque graphique (axes, barres, nuages, ordre des nœuds du diagramme de flux).</td></tr>
+            <tr><th scope="row">Taille</th><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td>Seule autre variable quantitative : elle code les effectifs et les montants quand la position est déjà prise (longueur des barres, largeur des bandes, aire des bulles).</td></tr>
+            <tr><th scope="row">Valeur</th><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span class="sr-only">non</span></td><td>Ordonnée mais pas quantitative : parfaite pour une gamme (Basic → Signature), pas pour lire un montant. D’où la rampe « encre » des cartes.</td></tr>
+            <tr><th scope="row">Texture</th><td class="chk"><span class="sr-only">non</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span class="sr-only">non</span></td><td>Écartée : sur des barres de quelques pixels, elle ajoute du bruit sans apporter d’ordre.</td></tr>
+            <tr><th scope="row">Couleur</th><td class="chk"><span class="sr-only">non</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span class="sr-only">non</span></td><td>Pas ordonnée : réservée aux catégories sans ordre (dépenses). Dans le diagramme de flux, on l’emploie pour sa sélectivité (suivre chaque bande), l’ordre restant porté par la position.</td></tr>
+            <tr><th scope="row">Orientation</th><td class="chk"><span class="sr-only">non</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span class="sr-only">non</span></td><td>Écartée : peu naturelle pour des données chiffrées.</td></tr>
+            <tr><th scope="row">Forme</th><td class="chk"><span class="sr-only">non</span></td><td class="chk"><span aria-hidden="true">✓</span><span class="sr-only">oui</span></td><td class="chk"><span class="sr-only">non</span></td><td class="chk"><span class="sr-only">non</span></td><td>Seulement associative : utilisée en appoint, pour distinguer deux types de marques dans un même graphique, toujours avec une légende.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source">Source : J. Bertin, 1967, d’après le support de cours.</p>
+      <p>Lecture&#8239;: seules la position et la taille sont à la fois ordonnées et quantitatives. Ce sont donc elles qui portent les montants et les effectifs sur tout le site&#8239;; la couleur, qui n’est ni ordonnée ni quantitative, ne code jamais seule une quantité.</p>
+
+      <h3>Le classement selon les échelles de mesure (Mackinlay)</h3>
+      <p>Pour chaque échelle de mesure, Mackinlay classe les variables de la plus précise (rang 1) à la moins précise (rang 10). Une règle simple en découle&#8239;: <strong>la donnée la plus importante prend la meilleure variable disponible</strong>. La position, en tête pour les trois échelles, est donc réservée à la question principale de chaque graphique. Les cases sur fond teinté sont les variables utilisées dans le projet (survolez-les pour voir où).</p>
+      <div class="table-wrap">
+        <table class="data mackinlay">
+          <caption class="sr-only">Classement des variables visuelles selon les échelles de mesure, variables utilisées dans le projet mises en évidence</caption>
+          <thead><tr><th scope="col" class="c">Rang</th><th scope="col">Quantitative</th><th scope="col">Ordinale</th><th scope="col">Nominale</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" class="c">1</th><td class="used" title="Utilisée : axes de tous les graphiques">Position<span class="sr-only"> (utilisée : axes de tous les graphiques)</span></td><td class="used" title="Utilisée : tranches d’âge, quintiles, ordre des cartes du diagramme de flux">Position<span class="sr-only"> (utilisée : tranches d’âge, quintiles, ordre des cartes du diagramme de flux)</span></td><td class="used" title="Utilisée : une ligne par profession ou catégorie">Position<span class="sr-only"> (utilisée : une ligne par profession ou catégorie)</span></td></tr>
+            <tr><th scope="row" class="c">2</th><td class="used" title="Utilisée : barres, bandes du diagramme de flux">Longueur<span class="sr-only"> (utilisée : barres, bandes du diagramme de flux)</span></td><td class="used" title="Utilisée : rampe « encre » des cartes">Luminosité<span class="sr-only"> (utilisée : rampe « encre » des cartes)</span></td><td class="used" title="Utilisée : catégories de dépense">Teinte (couleur)<span class="sr-only"> (utilisée : catégories de dépense)</span></td></tr>
+            <tr><th scope="row" class="c">3</th><td>Angle</td><td>Saturation (couleur)</td><td>Texture</td></tr>
+            <tr><th scope="row" class="c">4</th><td class="used" title="Utilisée : bulles, cartes de l’accueil, taille des points">Aire (taille)<span class="sr-only"> (utilisée : bulles, cartes de l’accueil, taille des points)</span></td><td class="used" title="Utilisée : cartes du diagramme de flux (doublée par la position)">Teinte (couleur)<span class="sr-only"> (utilisée : cartes du diagramme de flux (doublée par la position))</span></td><td>Luminosité</td></tr>
+            <tr><th scope="row" class="c">5</th><td>Volume</td><td>Texture</td><td>Saturation (couleur)</td></tr>
+            <tr><th scope="row" class="c">6</th><td class="used" title="Utilisée : intensité du score (rouge ou bleu)">Luminosité<span class="sr-only"> (utilisée : intensité du score (rouge ou bleu))</span></td><td>Longueur</td><td class="used" title="Utilisée : barre ou point, cercle vide ou plein">Forme<span class="sr-only"> (utilisée : barre ou point, cercle vide ou plein)</span></td></tr>
+            <tr><th scope="row" class="c">7</th><td>Saturation (couleur)</td><td>Angle</td><td>Longueur</td></tr>
+            <tr><th scope="row" class="c">8</th><td>Teinte (couleur)</td><td>Aire (taille)</td><td>Angle</td></tr>
+            <tr><th scope="row" class="c">9</th><td>Texture</td><td>Volume</td><td>Aire</td></tr>
+            <tr><th scope="row" class="c">10</th><td>Forme</td><td>Forme</td><td>Volume</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source">Source : J. Mackinlay, «&#8239;Automating the design of graphical presentations of relational information&#8239;», <em>ACM Transactions on Graphics</em>, 1986, d’après le support de cours.</p>
+      <p>Lecture&#8239;: pour les quantités, le projet n’utilise que les rangs 1, 2 et 4 pour l’information principale. Le rang 6 (luminosité) n’intervient que pour le score en troisième dimension d’un nuage, et il est alors doublé par une carte de chaleur, des lignes d’iso-score et un tableau. Aucun angle (camembert) ni volume (3D) n’est utilisé.</p>
+
+      <h3>Ce que ces tableaux impliquent pour chaque donnée du projet</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Donnée</th><th scope="col">Échelle</th><th scope="col">Variable choisie</th><th scope="col">Justification</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Montants, effectifs, parts, corrélations</th><td>Quantitative</td><td>Position, longueur</td><td>Rangs 1 et 2 de Mackinlay : la lecture la plus précise.</td></tr>
+            <tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité) d’une seule teinte</td><td>La position étant prise, la luminosité est la meilleure variable ordinale restante ; elle est ordonnée chez Bertin, alors que la teinte ne l’est pas. Exception : le diagramme de flux du chapitre 1 (voir plus bas).</td></tr>
+            <tr><th scope="row">Catégorie de dépense</th><td>Nominale</td><td>Teinte</td><td>Rang 2 pour le nominal (après la position) ; associative et sélective, sans suggérer d’ordre qui n’existe pas.</td></tr>
+            <tr><th scope="row">Profession, groupe d’âge, genre</th><td>Nominale ou ordinale</td><td>Position sur l’axe (une ligne par groupe)</td><td>Rang 1 : les noms sont écrits à côté, sans légende.</td></tr>
+            <tr><th scope="row">Score de crédit (3<sup>e</sup> dimension d’un nuage)</th><td>Quantitative</td><td>Couleur divergente (luminosité et teinte)</td><td>Les deux positions codent déjà les causes. La couleur est moins précise (rang 6) ; on compense par la carte de chaleur, les lignes d’iso-score et le tableau.</td></tr>
+            <tr><th scope="row">Nombre de clients par carte (bulles, accueil)</th><td>Quantitative</td><td>Aire</td><td>Rang 4 : suffisant pour un ordre de grandeur secondaire ; on dimensionne l’aire, pas le rayon.</td></tr>
+            <tr><th scope="row">Zone à risque</th><td>Nominale (dedans / dehors)</td><td>Teinte rouge, contour et icône</td><td>Redondance volontaire : la couleur n’est jamais seule à porter l’information.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="m-choix">
+      <h2 id="m-choix">Choix des graphiques, et ceux qu’on a écartés</h2>
+      <p>Chaque graphique répond à une question précise. Sur chaque page, le volet «&#8239;Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?&#8239;», accessible par un lien placé sous le titre de chaque graphique, détaille le raisonnement sous forme de tableaux ; le tableau ci-dessous en fait la synthèse. Chaque figure a aussi une infobulle, un tableau de données et une note «&#8239;Lecture / Champ&#8239;», sur le modèle des publications de l’Insee.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Question</th><th scope="col">Graphique retenu</th><th scope="col">Variables visuelles (rang de Mackinlay)</th><th scope="col">Écarté, et pourquoi</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Quelle carte pour quelle profession&#8239;?</th><td>Diagramme de Sankey (flux profession → carte)</td><td>Position ordonnée des nœuds (rang 1) ; largeur des bandes (longueur, rang 2) ; teinte pour reconnaître chaque carte d’arrivée (rang 2 en nominal)</td><td>Barres empilées (montrent la composition, pas les flux) ; camemberts (angles) ; treemap (aires)</td></tr>
+            <tr><th scope="row">Quel revenu pour quelle carte&#8239;?</th><td>Histogramme empilé, échelle log, bornes min–max</td><td>Position et hauteur (rangs 1 et 2) ; valeur pour la carte (rang 2 en ordinal)</td><td>Boîtes à moustaches (cachent les chevauchements) ; densités superposées (se masquent)</td></tr>
+            <tr><th scope="row">Comment le plafond est-il fixé&#8239;?</th><td>Nuage de points log-log</td><td>Position x et y (rang 1) ; valeur pour la carte (rang 2 en ordinal)</td><td>Barres du ratio moyen (cachent la règle proportionnelle et la dispersion)</td></tr>
+            <tr><th scope="row">L’âge et le genre comptent-ils&#8239;?</th><td>Pyramide des âges et barres à 100&#8239;%</td><td>Position et longueur (rangs 1 et 2) ; valeur pour la carte, dans la pyramide et les barres (rang 2 en ordinal)</td><td>Pyramide en cinq teintes différentes (bruit coloré sur des barres fines) ; tableau croisé âge × carte (53 × 5 cases)</td></tr>
+            <tr><th scope="row">Que contient le panier&#8239;?</th><td>Barres empilées à 100&#8239;% (ou en montant)</td><td>Longueur (rang 2) ; teinte pour la catégorie (rang 2 en nominal)</td><td>Camembert, anneau, sunburst (angles et aires) ; barres groupées (35 barres)</td></tr>
+            <tr><th scope="row">Les groupes diffèrent-ils&#8239;?</th><td>Diagramme en points des écarts</td><td>Position sur un axe commun (rang 1)</td><td>Barres divergentes (encombrant) ; carte de chaleur (couleur pour du quantitatif)</td></tr>
+            <tr><th scope="row">D’où vient l’écart de volume&#8239;?</th><td>Nuage fréquence × panier, courbes d’iso-dépense</td><td>Position (rang 1) ; aire pour l’effectif (rang 4) ; valeur pour la carte (rang 2 en ordinal)</td><td>Deux diagrammes en barres (ne montrent pas le produit des deux facteurs)</td></tr>
+            <tr><th scope="row">Qui paie à l’étranger&#8239;?</th><td>Barres et points sur un même axe</td><td>Longueur et position (rangs 1 et 2) ; forme pour distinguer les deux mesures (rang 6 en nominal, avec légende)</td><td>Double axe (trompeur) ; barres groupées</td></tr>
+            <tr><th scope="row">Qui présente un risque&#8239;?</th><td>Nuage ou carte de chaleur, zone réglable</td><td>Position (rang 1) ; couleur divergente pour le score (luminosité, rang 6) ; aire pour le solde (rang 4)</td><td>Graphique en 3D (occlusions) ; 50&nbsp;000 points bruts (saturation) ; zone rectangulaire seule</td></tr>
+            <tr><th scope="row">Qu’est-ce qui pèse sur le score&#8239;?</th><td>Barres divergentes d’effets, simulateur</td><td>Longueur depuis zéro (rang 2) ; côté et teinte pour le signe (rang 2 en nominal)</td><td>Tableau de coefficients bruts (unités incomparables)</td></tr>
+            <tr><th scope="row">Quels liens entre variables&#8239;?</th><td>Matrice triangulaire et nuage associé</td><td>Position (rang 1) ; couleur divergente (luminosité, rang 6) doublée des chiffres</td><td>Matrice de nuages 10 × 10 (illisible)</td></tr>
+            <tr><th scope="row">La carte améliore-t-elle le score&#8239;?</th><td>Haltères (observé / ajusté)</td><td>Position (rang 1) ; cercle vide ou plein (forme, rang 6 en nominal)</td><td>Barres groupées (axe à zéro obligatoire, écarts invisibles)</td></tr>
+            <tr><th scope="row">Les connectés dépensent-ils plus&#8239;?</th><td>Boîtes à moustaches par quintile, échelle log</td><td>Position (rang 1)</td><td>Moyennes en barres (tirées par les gros clients) ; violons (moins familiers)</td></tr>
+            <tr><th scope="row">Est-ce l’effet de la carte&#8239;?</th><td>Barres à 100&#8239;% et une courbe par carte</td><td>Longueur et position (rangs 1 et 2) ; valeur pour la carte (rang 2 en ordinal)</td><td>25 boîtes à moustaches ; barres groupées (cassent la continuité)</td></tr>
+            <tr><th scope="row">Les points sont-ils utilisés&#8239;?</th><td>Gaufrier de 100 cases et barres</td><td>Nombre de cases, lu comme une longueur (rang 2) ; longueur des barres (rang 2)</td><td>Camembert à deux parts (angle, rien de plus qu’un chiffre)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Cas de la pyramide des âges.</strong> Ses 106 barres ne font que quelques pixels de haut. Découpées par carte, leurs cinq nuances de bleu ne permettent pas de lire chaque part, et ce n’est pas leur rôle : elles forment un dégradé d’ensemble qui reste le même à tout âge, preuve visuelle que l’âge ne change pas la carte. Une seule teinte (la rampe des cartes) a été préférée à cinq teintes différentes, qui produiraient un bruit coloré sur des marques aussi petites. Les parts exactes sont confiées au graphique voisin et au tableau.</p>
+    </section>
+
+    <section class="block" aria-labelledby="m-couleurs">
+      <h2 id="m-couleurs">Couleurs : le choix et sa vérification</h2>
+      <p><strong>Règle de base : une couleur a un seul rôle sur tout le site.</strong> Le lecteur apprend une fois ce qu’elle signifie, puis la reconnaît partout (propriété associative).</p>
+      <h3>Les cinq familles de couleurs</h3>
+      <p><strong>Les cartes</strong> forment une gamme ordonnée. Elles prennent donc une seule teinte «&#8239;encre&#8239;», du plus clair (Basic) au plus foncé (Signature) : la luminosité est ordonnée, l’œil lit l’ordre sans légende, et le foncé évoque les cartes haut de gamme. Cinq teintes différentes auraient suggéré des catégories sans ordre.</p>
+      <div class="swatches">
+        <span class="sw-item"><i class="sw" style="background:var(--card-0)"></i>Basic</span>
+        <span class="sw-item"><i class="sw" style="background:var(--card-1)"></i>Silver</span>
+        <span class="sw-item"><i class="sw" style="background:var(--card-2)"></i>Gold</span>
+        <span class="sw-item"><i class="sw" style="background:var(--card-3)"></i>Platinum</span>
+        <span class="sw-item"><i class="sw" style="background:var(--card-4)"></i>Signature</span>
+      </div>
+      <p><strong>Une exception : le diagramme de flux du chapitre 1.</strong> Dans le Sankey «&#8239;profession → carte&#8239;», les bandes se croisent et il faut pouvoir suivre chacune d’un bout à l’autre. Une rampe de luminosité y serait trop peu sélective&#8239;: chaque carte y prend donc sa propre teinte (bleu, vert, jaune, orange, violet), et l’ordre de la gamme est porté par la position des cartes, de haut en bas. La palette passe les contrôles de daltonisme&#8239;: écart minimal de 16,2 en thème clair, et de 6,9 en thème sombre, compensé par les étiquettes directes des cartes.</p>
+      <div class="swatches">
+        <span class="sw-item"><i class="sw" style="background:var(--flux-0)"></i>Basic</span>
+        <span class="sw-item"><i class="sw" style="background:var(--flux-1)"></i>Silver</span>
+        <span class="sw-item"><i class="sw" style="background:var(--flux-2)"></i>Gold</span>
+        <span class="sw-item"><i class="sw" style="background:var(--flux-3)"></i>Platinum</span>
+        <span class="sw-item"><i class="sw" style="background:var(--flux-4)"></i>Signature</span>
+      </div>
+      <p><strong>Les catégories de dépense</strong> n’ont pas d’ordre : elles prennent sept teintes nettement différentes, toujours dans le même ordre (de la plus grosse catégorie à la plus petite). Sept est le maximum raisonnable : au-delà, les couleurs se confondent.</p>
+      <div class="swatches">
+        <span class="sw-item"><i class="sw" style="background:var(--cat-0)"></i>Courses</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-1)"></i>Factures</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-2)"></i>Achats en ligne</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-3)"></i>Carburant</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-4)"></i>Restaurants</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-5)"></i>Loisirs</span>
+        <span class="sw-item"><i class="sw" style="background:var(--cat-6)"></i>Voyages</span>
+      </div>
+      <p><strong>Le score</strong> a un centre qui a du sens (la moyenne de 629) : il prend une échelle <strong>divergente</strong>. Rouge en dessous (convention du danger), bleu au-dessus, gris au centre pour que les clients «&#8239;moyens&#8239;» s’effacent et que les extrêmes ressortent. Le couple rouge/bleu a été préféré au rouge/vert, que les personnes daltoniennes (8&#8239;% des hommes) confondent. Les mêmes pôles servent pour les effets du modèle et la matrice de corrélation.</p>
+      <div class="swatches">
+        <span class="sw-item"><i class="sw" style="width:220px;background:linear-gradient(90deg,var(--div-lo),var(--div-lo-2),var(--div-lo-3),var(--div-mid),var(--div-hi-3),var(--div-hi-2),var(--div-hi))"></i>480 → 630 → 780</span>
+      </div>
+      <p><strong>Les mesures sans lien avec une carte</strong> (boîtes à moustaches, gaufrier, nuage de la matrice) prennent un bleu-vert unique, volontairement éloigné de la rampe des cartes. <strong>L’alerte</strong> (zone à risque) utilise un rouge réservé, toujours accompagné d’un contour et d’une icône.</p>
+      <div class="swatches">
+        <span class="sw-item"><i class="sw" style="background:var(--mesure)"></i>Mesure unique</span>
+        <span class="sw-item"><i class="sw" style="background:var(--critical)"></i>Alerte</span>
+        <span class="sw-item"><i class="sw" style="background:var(--axis)"></i>Contexte (gris)</span>
+      </div>
+      <h3>Ce qui a été vérifié</h3>
+      <ul>
+        <li><strong>Daltonisme.</strong> La palette des catégories a été contrôlée par calcul, en simulant la protanopie et la deutéranopie (modèle de Machado, 2009). L’écart minimal entre deux couleurs voisines est de 9,1 en thème clair et 8,4 en thème sombre (ΔE OKLab), au-dessus du seuil recommandé de 8.</li>
+        <li><strong>Rampe des cartes.</strong> Sa luminosité croît strictement d’une carte à l’autre, avec un écart d’au moins 0,06 entre deux voisines. La plus claire (Basic) reste visible sur fond blanc (contraste 2 : 1). Comme deux cartes voisines restent proches, les graphiques où elles se côtoient ont des étiquettes directes.</li>
+        <li><strong>Lisibilité du texte.</strong> Tous les textes dépassent le contraste de 4,5 : 1 exigé par les règles d’accessibilité (WCAG). Dans une barre colorée, l’étiquette passe automatiquement en blanc ou en encre selon le fond.</li>
+        <li><strong>Une couleur, un seul sens.</strong> Les mesures qui ne représentent aucune carte (boîtes à moustaches, gaufrier, nuage de la matrice) n’empruntent jamais la rampe des cartes : un indigo aurait été confondu avec la carte Platinum. Elles prennent le bleu-vert, et les barres « à l’étranger » prennent la couleur de leur propre carte.</li>
+        <li><strong>Jamais la couleur seule.</strong> Chaque graphique a une légende, des étiquettes directes là où elles aident, et un tableau de données accessible au clavier et aux lecteurs d’écran.</li>
+        <li><strong>Thème sombre.</strong> Les couleurs sont recalibrées, pas inversées : sur fond sombre, la rampe des cartes s’inverse (Signature devient la plus claire), car c’est toujours la valeur la plus contrastée qui signale «&#8239;le plus&#8239;».</li>
+        <li><strong>Interaction par catégorie.</strong> Dans un nuage de 3&nbsp;000 points, un client isolé n’apprend rien au lecteur. Le survol fait donc ressortir toute sa catégorie (une carte, une catégorie de dépense) dans tous les graphiques de la page. Les légendes sont des boutons, atteignables au clavier. Un clic garde la catégorie en évidence et la touche Échap la relâche. Seul le nuage de la page Risque reste client par client, car on y lit le score de chaque client.</li>
+        <li><strong>Clavier et mouvement.</strong> Les barres et cases principales sont atteignables à la touche Tab, avec la même infobulle qu’au survol. Les animations sont coupées si le système le demande.</li>
+        <li><strong>Typographie.</strong> Une seule famille, Archivo (licence libre OFL), dont la largeur varie : titres en version large, texte en largeur normale.</li>
+      </ul>
+    </section>
+
+    <section class="block" aria-labelledby="m-limites">
+      <h2 id="m-limites">Signes d’un jeu de données synthétique, et limites</h2>
+      <p>Plusieurs régularités sont trop parfaites pour des données réelles. Elles n’empêchent pas l’exercice, mais elles invitent à la prudence dans l’interprétation&#8239;:</p>
+      <ul>
+        <li><strong>L’âge est indépendant de la profession&#8239;:</strong> 1&nbsp;403 «&#8239;retraités&#8239;» ont moins de 30 ans, 593 «&#8239;étudiants&#8239;» ont 50 ans ou plus.</li>
+        <li><strong>Revenus en fourchettes fixes&#8239;:</strong> chaque profession a un revenu compris entre deux bornes nettes (étudiants&#8239;: 100&nbsp;k à 400&nbsp;k, chefs d’entreprise&#8239;: 800&nbsp;k à 8&nbsp;M).</li>
+        <li><strong>Plafond proportionnel au revenu&#8239;:</strong> exactement 18, 28, 40, 55 ou 75&#8239;% selon la carte, à environ 10&#8239;% près.</li>
+        <li><strong>Mêmes proportions partout&#8239;:</strong> la structure des dépenses et le taux d’utilisation des points sont identiques dans tous les groupes, et 40&#8239;% des clients n’ont jamais utilisé de points, quel que soit le groupe.</li>
+        <li><strong>Un score presque déterministe&#8239;:</strong> deux variables en expliquent 95&#8239;%, ce qui est bien plus que dans la réalité.</li>
+      </ul>
+      <p>Limites générales&#8239;: données observées à un instant donné (pas de causalité ni de tendance), score de crédit qui n’est pas un défaut de paiement observé, période des connexions non précisée, devise inconnue.</p>
+    </section>
+
+    <section class="block" aria-labelledby="m-outils">
+      <h2 id="m-outils">Outils et fichiers</h2>
+      <ul>
+        <li><strong>D3.js v7.9.0</strong>, inclus dans le dossier (aucune connexion Internet nécessaire)&#8239;: échelles, axes, piles, agrégations (<code>d3.rollup</code>, <code>d3.bin</code>), transitions, sélection à la souris (<code>d3.brush</code>), recherche du point le plus proche (<code>d3.Delaunay</code>).</li>
+        <li><strong>Python 3, pandas et numpy</strong> pour la préparation des données.</li>
+        <li><strong>HTML, CSS et JavaScript</strong> sans framework ni étape de compilation.</li>
+      </ul>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th scope="col">Fichier</th><th scope="col">Rôle</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">index.html</th><td>Accueil&#8239;: thèse, indicateurs clés, synthèse</td></tr>
+            <tr><th scope="row">profil.html, depenses.html, risque.html, engagement.html</th><td>Les quatre chapitres</td></tr>
+            <tr><th scope="row">conclusion.html</th><td>Conclusion de l’étude</td></tr>
+            <tr><th scope="row">methodologie.html</th><td>Cette page</td></tr>
+            <tr><th scope="row">assets/js/commun.js</th><td>Socle partagé&#8239;: données, formats, thème, cadre de graphique, infobulle, filtres, tableaux</td></tr>
+            <tr><th scope="row">assets/js/accueil.js, profil.js, depenses.js, risque.js, engagement.js</th><td>Les graphiques de chaque page</td></tr>
+            <tr><th scope="row">assets/css/style.css</th><td>Système de design (couleurs clair et sombre, typographie, mise en page)</td></tr>
+            <tr><th scope="row">data/credit.csv</th><td>Données sources</td></tr>
+            <tr><th scope="row">data/donnees.js</th><td>Données préparées, générées par le script</td></tr>
+            <tr><th scope="row">scripts/prepare_data.py</th><td>Préparation reproductible des données</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <nav class="chapter-nav" aria-label="Retour">
+    <a href="conclusion.html"><small>Conclusion</small><strong>Ce que la banque peut en faire</strong></a>
+    <a class="next" href="index.html"><small>Retour</small><strong>Accueil</strong></a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Source&#8239;: credit.csv, 50&nbsp;000 clients, calculs des auteurs.</p>
+</footer>
+
+<script src="assets/js/commun.js"></script>
+</body>
+</html>

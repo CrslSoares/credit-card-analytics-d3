@@ -1,172 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banque X — Tableau de bord Comportement Clients</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!-- D3.js v7 CDN -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartes de crédit : 50 000 clients en données</title>
+<meta name="description" content="Projet de visualisation de données (D3.js) : profil, dépenses, risque de crédit et engagement de 50 000 porteurs de carte.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Analyse Comportementale des Cartes de Crédit</h1>
-    <p>Tableau de bord décisionnel à destination de la Direction Risques et Marketing</p>
-    <nav class="chart-navigation" aria-label="Navigation des graphiques">
-      <a href="#profil" data-page-link>Profil clients</a>
-      <a href="#depenses" data-page-link>Dépenses</a>
-      <a href="#risque" data-page-link>Risque de crédit</a>
-      <a href="#fidelite" data-page-link>Engagement & fidélité</a>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html" aria-current="page">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html">Méthode</a>
     </nav>
-  </header>
-
-  <main class="page-content">
-    <!-- Graphique 1 -->
-    <section class="card chart-page" id="profil">
-      <h2>1. Profil des Clients & Types de Cartes</h2>
-      <div id="filter-container-1"></div>
-      <div id="chart-profile"></div>
-      <!-- Bloc d'impact Business pour le Directeur Marketing -->
-<div class="business-impact-card">
-  <h3>🎯 Impact Business & Optimisation du Business Model Bancaire</h3>
-  
-  <div class="impact-grid">
-    <!-- Point 1 -->
-    <div class="impact-item">
-      <h4>1. Stratégie d'Up-Selling & Migration de Gamme (Maximisation du NBI)</h4>
-      <p><strong>Constat :</strong> Le graphique met en évidence les segments d'âge/professions qui dépensent beaucoup mais possèdent encore une carte de niveau inférieur (Basic ou Silver).</p>
-      <p><strong>Impact Business :</strong></p>
-
-      <ul>
-        <li><strong>Ciblage de montée en gamme :</strong> Identifier immédiatement les clients « sous-équipés » pour leur proposer des cartes Gold, Platinum ou Signature.</li>
-        <li><strong>Revenus additionnels :</strong> Augmentation des cotisations annuelles de carte et accroissement des commissions d'interchange (plus élevées sur les cartes Premium).</li>
-      </ul>
-    </div>
-
-    <!-- Point 2 -->
-    <div class="impact-item">
-      <h4>2. Réduction du Churn (Rétention des Clients à Forte Valeur)</h4>
-      <p><strong>Constat :</strong> Les grands blocs (ex: Business Owner ou Self-Employed entre 35 et 55 ans) représentent les générateurs de flux financiers les plus importants de la banque.</p>
-      <p><strong>Impact Business :</strong></p>
-
-      <ul>
-        <li><strong>Alertes de rétention proactive :</strong> Si l'activité d'un client appartenant à ces sous-groupes stratégiques baisse, l'équipe Marketing/CRM peut déclencher automatiquement des campagnes d'engagement personnalisées pour éviter qu'il ne parte chez une néobanque concurrente.</li>
-      </ul>
-    </div>
-
-    <!-- Point 3 -->
-    <div class="impact-item">
-      <h4>3. Acquisition & Performance des Campagnes MKT</h4>
-      <p><strong>Constat :</strong> Le Treemap permet de repérer en un coup d'œil les segments de clientèle où la pénétration des cartes Premium est déjà forte vs. les segments émergents.</p>
-      <p><strong>Impact Business :</strong></p>
-
-      <ul>
-        <li><strong>Allocation du budget MKT :</strong> Concentration du budget d'acquisition média (Google Ads, Social Ads, LinkedIn) sur les profils d'âge et de profession à plus forte rentabilité.</li>
-        <li><strong>Design d'offres de bienvenue :</strong> Adapter les primes à l'ouverture (ex: 80 € offerts ou 15 000 points de bienvenue) selon le profil cible et le type de carte attendu.</li>
-      </ul>
-    </div>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
   </div>
-</div>
-    </section>
+</header>
 
-    <!-- Graphique 2 -->
-    <section class="card chart-page" id="depenses" hidden>
-      <h2>2. Répartition des Dépenses par Catégorie</h2>
-      <div id="filter-container-2"></div>
-      <div id="chart-spending"></div>
-      <!-- Bloc d'impact Business Marketing -->
-<div class="business-impact-card">
-  <h3>🤝 Partenariats Stratégiques & Personnalisation de l'Expérience Client</h3>
-  
-  <div class="impact-grid">
-    <div class="impact-item">
-      <h4>1. Négociation d'Affiliation & Offres Cashback sur Mesure</h4>
-      <p><strong>Constat :</strong> Le donut interactif permet de croiser instantanément le type de carte, la tranche d'âge et le genre pour identifier les dépenses dominantes d'un segment précis (ex: prédominance du <em>Online Shopping</em> chez les jeunes vs <em>Travel/Dining</em> sur les cartes Premium).</p>
-      <p><strong>Impact Business :</strong></p>
-      <ul>
-        <li><strong>Partenariats e-commerce & retail :</strong> Négocier des taux de commission d'affiliation préférentiels (3 % à 5 %) avec des enseignes partenaires clés sur les catégories prioritaires du segment ciblé.</li>
-        <li><strong>Activation de carte :</strong> Lancer des opérations de cashback temporaires (ex: 5 % remboursés sur les supermarchés ou le carburant) pour stimuler le taux d'activation et l'usage quotidien des cartes à faible fréquence.</li>
-      </ul>
+<main id="contenu">
+  <section class="hero" aria-labelledby="titre">
+    <h1 id="titre"><span>Le revenu choisit la carte.</span><span>Le comportement fixe le risque.</span></h1>
+    <div class="hero-body">
+      <div class="hero-text">
+        <p class="lead">Une banque de détail gère 50&nbsp;000 cartes de crédit et s’apprête à revoir ses offres. Avant de décider, elle veut savoir ce que disent vraiment les données de ses clients.</p>
+        <div class="actions">
+          <a class="btn" href="profil.html">Commencer la lecture</a>
+          <a class="btn ghost" href="methodologie.html">Méthode et données</a>
+        </div>
+      </div>
+      <figure class="fan-wrap">
+        <div class="fan" id="fan" role="list" aria-label="Répartition des clients par type de carte"></div>
+        <figcaption class="fan-caption">Surface de chaque carte proportionnelle à son nombre de clients. Survolez une carte pour le détail.</figcaption>
+      </figure>
     </div>
+  </section>
 
-    <div class="impact-item">
-      <h4>2. Co-Branding & Avantages Exclusifs par Profil Client</h4>
-      <p><strong>Constat :</strong> L'analyse combinée (filtres Genre/Âge/Carte) révèle la concentration des budgets sur des postes stratégiques comme les voyages, la restauration ou le divertissement.</p>
-      <p><strong>Impact Business :</strong></p>
-      <ul>
-        <li><strong>Accords Compagnies Aériennes & Hôtellerie :</strong> Justifier la création de cartes co-brandées (miles multipliés, accès salons) auprès de partenaires stratégiques en démontrant le volume d'achat déjà existant de nos clients.</li>
-        <li><strong>Optimisation des campagnes d'acquisition :</strong> Ajuster les budgets d'acquisition média (LinkedIn, Google Ads, Social Ads) et les primes de bienvenue (ex: bons d'achat ou points de fidélité) en fonction des centres d'intérêt réels de chaque profil.</li>
-      </ul>
-    </div>
-
-    <div class="impact-item">
-      <h4>3. Hyper-Personnalisation de l'App Mobile (Cas d'Usage Banco Inter)</h4>
-      <p><strong>Constat :</strong> La répartition des dépenses varie radicalement selon le profil sociodémographique, ce qui permet d'identifier la catégorie phare de chaque segment.</p>
-      <p><strong>Impact Business :</strong> Personnaliser en temps réel le carrousel d'offres et de Gift Cards sur l'application bancaire selon le segment de l'utilisateur :</p>
-      <ul>
-        <li><strong>Profil Actifs (Employés / Cadres) :</strong> Dépenses en <em>Fuel</em> et <em>Utility Bills</em> -> Proposer automatiquement des cashbacks sur les factures récurrentes et les stations-services.</li>
-      </ul>
-    </div>
+  <div class="kpis-wrap">
+    <div class="kpis" id="kpis" aria-label="Indicateurs clés"></div>
   </div>
-</div>
-    </section>
 
-    <!-- Graphique 3 -->
-    <section class="card chart-page" id="risque" hidden>
-      <h2>3. Matrice de Risque de Crédit</h2>
-      <div id="chart-risk"></div>
-      <section class="card">
-  <!-- Bloc d'impact Business & Pertinence Métier -->
-  <div class="business-impact-card">
-    <h3>💡 Actions Stratégiques & Opérationnelles</h3>
-
-    <!-- Point 1 -->
-    <div class="impact-item">
-      <h4>1. Restructuration Proactive & Réduction des Impayés</h4>
-      <p><strong>Constat :</strong> La matrice croise la dépense mensuelle (<code>Monthly_Spending</code>) et le ratio de remboursement (<code>Payment_Ratio</code>), ce qui permet d'isoler instantanément les clients situés dans la zone de vulnérabilité (<code>Payment_Ratio</code> &le; 30 %) et de les associér au volume réel de dette engagée (taille de la bulle) ainsi qu'au score de crédit (couleur).</p>
-      <p><strong>Impact Business :</strong></p>
-      <ul>
-        <li><strong>Notifications préventives in-app :</strong> Déclencher des alertes automatisées proposant un étalement personnalisé des mensualités avant échéance pour limiter le risque de défaut de paiement.</li>
-        <li><strong>Consolidation de dette :</strong> Proposer des options de micro-crédit ou des solutions de refinancement à taux réajusté afin de remplacer des crédits renouvelables coûteux par des échéances stables et prévisibles.</li>
-      </ul>
+  <section class="home-section" aria-labelledby="t-contexte">
+    <h2 id="t-contexte">Le point de départ</h2>
+    <div style="max-width:70ch">
+      <p>Chaque année, la direction des cartes présente au comité de direction le bilan de son portefeuille. Cette fois, l’exercice a un enjeu plus concret&#8239;: le programme de fidélité arrive en fin de cycle, et le service risques n’est plus très sûr de ses règles d’alerte.</p>
+      <p>Plutôt que de trancher à l’intuition, la direction a demandé à chaque service de formuler sa question, puis d’aller chercher la réponse dans les données des 50&nbsp;000 porteurs. Le site reprend ces questions dans l’ordre où elles s’enchaînent. On commence par savoir qui sont les clients, ce qui aide à comprendre comment ils dépensent, puis lesquels présentent un risque. L’application mobile arrive en dernier, parce que c’est elle qui relie tous ces sujets.</p>
+      <p style="color:var(--ink-2);font-size:14px">La banque et ses services sont inventés pour l’exercice. Les chiffres, eux, sont tous calculés sur le fichier. Les montants n’ont pas d’unité, car la devise n’est pas précisée (il s’agit probablement de roupies, voir la page Méthode).</p>
     </div>
+  </section>
 
-    <!-- Point 2 -->
-    <div class="impact-item">
-      <h4>2. Plafonnement Dynamique des Limites & Gestion du Risque</h4>
-      <p><strong>Constat :</strong> Le filtre dynamique par score de crédit maximal ajuste le compteur de clients vulnérables en temps réel, en mettant en avant les profils combinant forte utilisation du découvert/crédit et historique de paiement fragile.</p>
-      <p><strong>Impact Business :</strong></p>
-      <ul>
-        <li><strong>Pilotage automatique du risque :</strong> Ajuster et réduire progressivement les plafonds de retrait d'espèces (<code>Cash_Advance_Amount</code>) et les autorisations de dépenses des profils très exposés, sans bloquer leurs opérations essentielles au quotidien.</li>
-        <li><strong>Optimisation des provisions :</strong> Rationaliser l'allocation de capital et les provisions pour créances douteuses grâce à un comptage précis et dynamique des clients en zone critique.</li>
-      </ul>
+  <section class="home-section" aria-labelledby="t-chapitres">
+    <h2 id="t-chapitres">Quatre questions, dans l’ordre où elles se posent</h2>
+    <p class="dek">Chaque chapitre donne d’abord sa réponse en une phrase. Les graphiques qui suivent la justifient. Tous sont interactifs&#8239;: filtres, infobulles et tableau de données.</p>
+    <div class="chapter-list">
+      <a class="chapter-tile" href="profil.html">
+        <div>
+          <div class="k">Chapitre 1 · La demande du marketing</div>
+          <h3>Qui sont nos clients&#8239;?</h3>
+          <p>La profession borne le revenu, et le revenu fixe la carte&#8239;: 100&#8239;% des étudiants ont une Basic, et seuls les chefs d’entreprise ont une Signature.</p>
+          <span class="go">Lire le chapitre</span>
+        </div>
+        <svg class="mini" id="mini-profil" aria-hidden="true"></svg>
+      </a>
+      <a class="chapter-tile" href="depenses.html">
+        <div>
+          <div class="k">Chapitre 2 · La demande de la fidélité</div>
+          <h3>Comment dépensent-ils&#8239;?</h3>
+          <p>Le panier est le même pour tous (courses 24&#8239;%, voyages 8&#8239;%). Seul le volume change&#8239;: un client Signature dépense 19 fois plus qu’un client Basic.</p>
+          <span class="go">Lire le chapitre</span>
+        </div>
+        <svg class="mini" id="mini-depenses" aria-hidden="true"></svg>
+      </a>
+      <a class="chapter-tile" href="risque.html">
+        <div>
+          <div class="k">Chapitre 3 · La demande des risques</div>
+          <h3>Qui présente un risque&#8239;?</h3>
+          <p>Deux comportements expliquent 95&#8239;% du score&#8239;: la part de la facture remboursée et la part du plafond utilisée. Le revenu et la carte n’y changent presque rien.</p>
+          <span class="go">Lire le chapitre</span>
+        </div>
+        <svg class="mini" id="mini-risque" aria-hidden="true"></svg>
+      </a>
+      <a class="chapter-tile" href="engagement.html">
+        <div>
+          <div class="k">Chapitre 4 · La demande de l’équipe de l’application</div>
+          <h3>L’application fidélise-t-elle&#8239;?</h3>
+          <p>Les clients les plus connectés dépensent 7 fois plus, et l’écart persiste à carte égale, sauf chez les Signature. Mais 78&#8239;% des points de fidélité ne sont jamais utilisés.</p>
+          <span class="go">Lire le chapitre</span>
+        </div>
+        <svg class="mini" id="mini-engagement" aria-hidden="true"></svg>
+      </a>
     </div>
+    <p style="margin:22px 0 0"><a href="conclusion.html">Aller directement à la conclusion →</a></p>
+  </section>
 
-    <!-- Point 3 -->
-    <div class="impact-item">
-      <h4>3. Éducation Financière Hyper-Personnalisée & Engagement</h4>
-      <p><strong>Constat :</strong> Le graphique visualise la transition entre les profils sains (forts remboursants / scores élevés) et les clients sous pression financière (faibles remboursants / scores dégradés).</p>
-      <p><strong>Impact Business :</strong></p>
-      <ul>
-        <li><strong>Parcours d'accompagnement in-app :</strong> Recommander des modules ludiques de gestion budgétaire dans l'application mobile pour les utilisateurs situés en zone d'alerte, tout en récompensant leur assainissement financier par des avantages progressifs.</li>
-        <li><strong>Up-sell ciblé pour les profils sains :</strong> Pour le segment affichant un taux de remboursement élevé (&gt; 60 %) et un faible risque, automatiser les propositions de rehaussement de plafond de crédit (<code>Credit_Limit</code>) ainsi que l'accès à des services premium.</li>
-      </ul>
+  <section class="home-section" aria-labelledby="t-synthese">
+    <h2 id="t-synthese">Ce que le client est, et ce qu’il fait de son crédit</h2>
+    <p class="dek">En reliant les variables par leur force de corrélation, le jeu de données se coupe en deux blocs presque indépendants&#8239;: ce que le client est (profession, revenu, carte) et ce qu’il fait de son crédit (remboursement, utilisation du plafond).</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-1" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    <div class="synthesis">
+      <figure style="margin:0">
+        <div class="chart" id="diagramme"></div>
+      </figure>
+      <div class="notes">
+        <p><strong>À gauche, tout découle du revenu.</strong> Il détermine la carte, le plafond (corrélation de 0,97), la dépense mensuelle (0,95) et, par la carte, l’usage de l’application.</p>
+        <p><strong>À droite, le score ne dépend que du comportement.</strong> Remboursement (+0,77) et utilisation du plafond (−0,60) suffisent à l’expliquer à 95&#8239;%.</p>
+        <p><strong>Entre les deux, presque rien.</strong> Revenu et score sont corrélés à 0,03&#8239;: un client aisé n’est pas un client plus sûr.</p>
+        <details class="more" data-table="t-diagramme">
+          <summary>Voir les données</summary>
+          <div class="body"></div>
+        </details>
+        <details class="more why" id="methode-1"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Variables du jeu de données</th><td>Nominale</td><td>Position des nœuds, en deux blocs encadrés</td><td class="c">1</td></tr>
+<tr><th scope="row">Force du lien (corrélation)</th><td>Quantitative</td><td>Épaisseur du trait, lue comme une longueur (taille chez Bertin), doublée du chiffre écrit</td><td class="c">2 (longueur)</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Un diagramme de liens à disposition fixe. Il montre que les variables forment deux blocs presque indépendants.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>La matrice de corrélation est précise mais elle ne fait pas apparaître les deux blocs. Elle reste au chapitre 3. Un réseau placé automatiquement changerait de forme à chaque chargement.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Aucune couleur de données. Seul le lien presque nul entre revenu et score est en gris clair.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+      </div>
     </div>
-  </div>
-</section>
-    </section>
+  </section>
 
-    <!-- Graphique 4 -->
-    <section class="card chart-page" id="fidelite" hidden>
-      <h2>4. Engagement App & Programmes de Fidélité</h2>
-      <div id="chart-loyalty"></div>
-    </section>
-  </main>
+</main>
 
-  <script src="js/main.js"></script>
-  <script src="js/chart1_profile.js"></script>
-  <script src="js/chart2_spending.js"></script>
-  <script src="js/chart3_risk.js"></script>
-  <script src="js/chart4_loyalty.js"></script>
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Données&#8239;: credit.csv, 50&#8239;000 clients et 30 variables. <a href="methodologie.html">Méthode et limites</a></p>
+</footer>
+
+<script src="assets/js/d3.v7.min.js"></script>
+<script src="data/donnees.js"></script>
+<script src="assets/js/commun.js"></script>
+<script src="assets/js/accueil.js"></script>
+<script>
+/* Lien « Voir la méthode » : ouvre le volet du graphique et le fait défiler à l'écran. */
+(function(){
+  function ouvrir(id, defiler){
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== "DETAILS") return false;
+    d.open = true;
+    if (defiler) {
+      var calme = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      d.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+      var s = d.querySelector("summary"); if (s) s.focus({preventScroll: true});
+    }
+    return true;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-methode]");
+    if (!a) return;
+    if (ouvrir(a.getAttribute("href").slice(1), true)) {
+      e.preventDefault();
+      try { history.replaceState(null, "", a.getAttribute("href")); } catch(_) {}
+    }
+  });
+  if (location.hash) ouvrir(location.hash.slice(1), false);
+})();
+</script>
 </body>
 </html>

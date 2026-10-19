@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banque X — Tableau de bord Comportement Clients</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- D3.js v7 CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Analyse Comportementale des Cartes de Crédit</h1>
+    <p>Tableau de bord décisionnel à destination de la Direction Risques et Marketing</p>
+    <nav class="chart-navigation" aria-label="Navigation des graphiques">
+      <a href="#profil" data-page-link>Profil clients</a>
+      <a href="#depenses" data-page-link>Dépenses</a>
+      <a href="#risque" data-page-link>Risque de crédit</a>
+      <a href="#fidelite" data-page-link>Engagement & fidélité</a>
+    </nav>
+  </header>
+
+  <main class="page-content">
+    <!-- Graphique 1 -->
+    <section class="card chart-page" id="profil">
+      <h2>1. Profil des Clients & Types de Cartes</h2>
+      <div id="filter-container-1"></div>
+      <div id="chart-profile"></div>
+      <!-- Bloc d'impact Business pour le Directeur Marketing -->
+<div class="business-impact-card">
+  <h3>🎯 Impact Business & Optimisation du Business Model Bancaire</h3>
+  
+  <div class="impact-grid">
+    <!-- Point 1 -->
+    <div class="impact-item">
+      <h4>1. Stratégie d'Up-Selling & Migration de Gamme (Maximisation du NBI)</h4>
+      <p><strong>Constat :</strong> Le graphique met en évidence les segments d'âge/professions qui dépensent beaucoup mais possèdent encore une carte de niveau inférieur (Basic ou Silver).</p>
+      <p><strong>Impact Business :</strong></p>
+
+      <ul>
+        <li><strong>Ciblage de montée en gamme :</strong> Identifier immédiatement les clients « sous-équipés » pour leur proposer des cartes Gold, Platinum ou Signature.</li>
+        <li><strong>Revenus additionnels :</strong> Augmentation des cotisations annuelles de carte et accroissement des commissions d'interchange (plus élevées sur les cartes Premium).</li>
+      </ul>
+    </div>
+
+    <!-- Point 2 -->
+    <div class="impact-item">
+      <h4>2. Réduction du Churn (Rétention des Clients à Forte Valeur)</h4>
+      <p><strong>Constat :</strong> Les grands blocs (ex: Business Owner ou Self-Employed entre 35 et 55 ans) représentent les générateurs de flux financiers les plus importants de la banque.</p>
+      <p><strong>Impact Business :</strong></p>
+
+      <ul>
+        <li><strong>Alertes de rétention proactive :</strong> Si l'activité d'un client appartenant à ces sous-groupes stratégiques baisse, l'équipe Marketing/CRM peut déclencher automatiquement des campagnes d'engagement personnalisées pour éviter qu'il ne parte chez une néobanque concurrente.</li>
+      </ul>
+    </div>
+
+    <!-- Point 3 -->
+    <div class="impact-item">
+      <h4>3. Acquisition & Performance des Campagnes MKT</h4>
+      <p><strong>Constat :</strong> Le Treemap permet de repérer en un coup d'œil les segments de clientèle où la pénétration des cartes Premium est déjà forte vs. les segments émergents.</p>
+      <p><strong>Impact Business :</strong></p>
+
+      <ul>
+        <li><strong>Allocation du budget MKT :</strong> Concentration du budget d'acquisition média (Google Ads, Social Ads, LinkedIn) sur les profils d'âge et de profession à plus forte rentabilité.</li>
+        <li><strong>Design d'offres de bienvenue :</strong> Adapter les primes à l'ouverture (ex: 80 € offerts ou 15 000 points de bienvenue) selon le profil cible et le type de carte attendu.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+    </section>
+
+    <!-- Graphique 2 -->
+    <section class="card chart-page" id="depenses" hidden>
+      <h2>2. Répartition des Dépenses par Catégorie</h2>
+      <div id="filter-container-2"></div>
+      <div id="chart-spending"></div>
+      <!-- Bloc d'impact Business Marketing -->
+<div class="business-impact-card">
+  <h3>🤝 Partenariats Stratégiques & Personnalisation de l'Expérience Client</h3>
+  
+  <div class="impact-grid">
+    <div class="impact-item">
+      <h4>1. Négociation d'Affiliation & Offres Cashback sur Mesure</h4>
+      <p><strong>Constat :</strong> Le donut interactif permet de croiser instantanément le type de carte, la tranche d'âge et le genre pour identifier les dépenses dominantes d'un segment précis (ex: prédominance du <em>Online Shopping</em> chez les jeunes vs <em>Travel/Dining</em> sur les cartes Premium).</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Partenariats e-commerce & retail :</strong> Négocier des taux de commission d'affiliation préférentiels (3 % à 5 %) avec des enseignes partenaires clés sur les catégories prioritaires du segment ciblé.</li>
+        <li><strong>Activation de carte :</strong> Lancer des opérations de cashback temporaires (ex: 5 % remboursés sur les supermarchés ou le carburant) pour stimuler le taux d'activation et l'usage quotidien des cartes à faible fréquence.</li>
+      </ul>
+    </div>
+
+    <div class="impact-item">
+      <h4>2. Co-Branding & Avantages Exclusifs par Profil Client</h4>
+      <p><strong>Constat :</strong> L'analyse combinée (filtres Genre/Âge/Carte) révèle la concentration des budgets sur des postes stratégiques comme les voyages, la restauration ou le divertissement.</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Accords Compagnies Aériennes & Hôtellerie :</strong> Justifier la création de cartes co-brandées (miles multipliés, accès salons) auprès de partenaires stratégiques en démontrant le volume d'achat déjà existant de nos clients.</li>
+        <li><strong>Optimisation des campagnes d'acquisition :</strong> Ajuster les budgets d'acquisition média (LinkedIn, Google Ads, Social Ads) et les primes de bienvenue (ex: bons d'achat ou points de fidélité) en fonction des centres d'intérêt réels de chaque profil.</li>
+      </ul>
+    </div>
+
+    <div class="impact-item">
+      <h4>3. Hyper-Personnalisation de l'App Mobile (Cas d'Usage Banco Inter)</h4>
+      <p><strong>Constat :</strong> La répartition des dépenses varie radicalement selon le profil sociodémographique, ce qui permet d'identifier la catégorie phare de chaque segment.</p>
+      <p><strong>Impact Business :</strong> Personnaliser en temps réel le carrousel d'offres et de Gift Cards sur l'application bancaire selon le segment de l'utilisateur :</p>
+      <ul>
+        <li><strong>Profil Actifs (Employés / Cadres) :</strong> Dépenses en <em>Fuel</em> et <em>Utility Bills</em> -> Proposer automatiquement des cashbacks sur les factures récurrentes et les stations-services.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+    </section>
+
+    <!-- Graphique 3 -->
+    <section class="card chart-page" id="risque" hidden>
+      <h2>3. Matrice de Risque de Crédit</h2>
+      <div id="chart-risk"></div>
+      <section class="card">
+  <!-- Bloc d'impact Business & Pertinence Métier -->
+  <div class="business-impact-card">
+    <h3>💡 Actions Stratégiques & Opérationnelles</h3>
+
+    <!-- Point 1 -->
+    <div class="impact-item">
+      <h4>1. Restructuration Proactive & Réduction des Impayés</h4>
+      <p><strong>Constat :</strong> La matrice croise la dépense mensuelle (<code>Monthly_Spending</code>) et le ratio de remboursement (<code>Payment_Ratio</code>), ce qui permet d'isoler instantanément les clients situés dans la zone de vulnérabilité (<code>Payment_Ratio</code> &le; 30 %) et de les associér au volume réel de dette engagée (taille de la bulle) ainsi qu'au score de crédit (couleur).</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Notifications préventives in-app :</strong> Déclencher des alertes automatisées proposant un étalement personnalisé des mensualités avant échéance pour limiter le risque de défaut de paiement.</li>
+        <li><strong>Consolidation de dette :</strong> Proposer des options de micro-crédit ou des solutions de refinancement à taux réajusté afin de remplacer des crédits renouvelables coûteux par des échéances stables et prévisibles.</li>
+      </ul>
+    </div>
+
+    <!-- Point 2 -->
+    <div class="impact-item">
+      <h4>2. Plafonnement Dynamique des Limites & Gestion du Risque</h4>
+      <p><strong>Constat :</strong> Le filtre dynamique par score de crédit maximal ajuste le compteur de clients vulnérables en temps réel, en mettant en avant les profils combinant forte utilisation du découvert/crédit et historique de paiement fragile.</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Pilotage automatique du risque :</strong> Ajuster et réduire progressivement les plafonds de retrait d'espèces (<code>Cash_Advance_Amount</code>) et les autorisations de dépenses des profils très exposés, sans bloquer leurs opérations essentielles au quotidien.</li>
+        <li><strong>Optimisation des provisions :</strong> Rationaliser l'allocation de capital et les provisions pour créances douteuses grâce à un comptage précis et dynamique des clients en zone critique.</li>
+      </ul>
+    </div>
+
+    <!-- Point 3 -->
+    <div class="impact-item">
+      <h4>3. Éducation Financière Hyper-Personnalisée & Engagement</h4>
+      <p><strong>Constat :</strong> Le graphique visualise la transition entre les profils sains (forts remboursants / scores élevés) et les clients sous pression financière (faibles remboursants / scores dégradés).</p>
+      <p><strong>Impact Business :</strong></p>
+      <ul>
+        <li><strong>Parcours d'accompagnement in-app :</strong> Recommander des modules ludiques de gestion budgétaire dans l'application mobile pour les utilisateurs situés en zone d'alerte, tout en récompensant leur assainissement financier par des avantages progressifs.</li>
+        <li><strong>Up-sell ciblé pour les profils sains :</strong> Pour le segment affichant un taux de remboursement élevé (&gt; 60 %) et un faible risque, automatiser les propositions de rehaussement de plafond de crédit (<code>Credit_Limit</code>) ainsi que l'accès à des services premium.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+    </section>
+
+    <!-- Graphique 4 -->
+    <section class="card chart-page" id="fidelite" hidden>
+      <h2>4. Engagement App & Programmes de Fidélité</h2>
+      <div id="chart-loyalty"></div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/chart1_profile.js"></script>
+  <script src="js/chart2_spending.js"></script>
+  <script src="js/chart3_risk.js"></script>
+  <script src="js/chart4_loyalty.js"></script>
+</body>
+</html>

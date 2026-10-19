@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qui sont nos clients ? · Cartes de crédit</title>
+<meta name="description" content="Chapitre 1 : profession, revenu, type de carte, plafond, âge et genre de 50 000 porteurs de carte.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html" aria-current="page"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html">Méthode</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="chapter-head">
+    <p class="kicker">Chapitre 1 sur 4</p>
+    <h1>Qui sont nos clients&#8239;?</h1>
+    <p class="lead">La carte d’un client se déduit presque entièrement de son revenu, lui-même borné par sa profession. Le plafond de crédit suit ensuite une règle fixe propre à chaque carte. L’âge et le genre, eux, ne changent rien.</p>
+    <div class="panel contexte" style="margin-top:24px;max-width:72ch">
+      <p class="kicker" style="margin:0 0 8px">La demande du marketing</p>
+      <p style="margin:0">Le marketing prépare ses campagnes de l’an prochain. Pour chaque client, il dispose de ce que la banque a noté à l’ouverture de la carte&#8239;: la profession, le revenu, l’âge et le genre. Sa question est simple&#8239;: lesquelles de ces informations expliquent vraiment la carte détenue&#8239;? La réponse lui dirait à qui proposer une carte supérieure. Au passage, il aimerait comprendre comment la banque fixe le plafond de chaque carte, une règle que personne dans le service ne sait vraiment expliquer.</p>
+    </div>
+  </header>
+
+  <div class="filters" role="region" aria-label="Filtres">
+    <div class="inner" id="filtres"></div>
+  </div>
+
+  <!-- A. Professions → cartes (diagramme de Sankey) -->
+  <section class="section" aria-labelledby="t-a">
+    <div class="section-head">
+      <h2 id="t-a">Chaque profession a sa gamme de cartes</h2>
+      <p class="dek">Pour chaque profession, quelle carte détiennent les clients. À gauche, les six professions, du revenu médian le plus faible (en haut) au plus élevé (en bas). À droite, les cinq cartes, de la plus simple à la plus haut de gamme. Chaque bande relie une profession à une carte&#8239;: sa largeur correspond au nombre de clients, sa couleur à la carte d’arrivée. Cliquez sur une profession pour l’isoler dans toute la page.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-1" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-a"></div>
+    <figure class="figure"><div class="chart" id="chart-a"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> la seule bande qui part des étudiants est bleue&#8239;: tous ont une carte Basic. Les bandes violettes partent toutes des chefs d’entreprise&#8239;: 41,5&#8239;% d’entre eux ont une Signature, et ils sont les seuls. Plus on descend vers les professions les mieux payées, plus les bandes filent vers les cartes haut de gamme, en bas à droite&#8239;: c’est ce décalage qui dessine l’arc-en-ciel.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres Genre et Âge. La profession choisie est mise en évidence plutôt que filtrée.</p>
+    </div>
+    <details class="more" data-table="t-a"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-1"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Profession</th><td>Nominale (rangée par revenu médian)</td><td>Position verticale à gauche</td><td class="c">1</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Position verticale à droite</td><td class="c">1</td></tr>
+<tr><th scope="row">Nombre de clients</th><td>Quantitative</td><td>Largeur des bandes et des nœuds</td><td class="c">2</td></tr>
+<tr><th scope="row">Carte d’arrivée de chaque bande</th><td>Nominale</td><td>Teinte</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Le diagramme de Sankey montre les flux dans les deux sens. On suit une profession vers ses cartes ou on remonte d’une carte vers ses professions. Des largeurs se comparent moins bien que des longueurs. Les chiffres exacts restent donc dans l’infobulle et le tableau.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Les barres empilées montrent la composition d’une profession mais pas les flux. Le camembert code par l’angle et la treemap par l’aire. Ces deux variables sont moins précises que la longueur.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Cinq teintes distinctes permettent de suivre chaque bande là où elles se croisent. C’est une exception à la rampe des cartes utilisée ailleurs. L’ordre de la gamme reste porté par la position. La palette a été testée en simulant le daltonisme.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">La profession ouvre ou ferme l’accès à certaines cartes, mais ce n’est pas elle qui décide vraiment. Ce qui compte, c’est le revenu qu’elle permet d’atteindre, et c’est ce que montre le graphique suivant.</p>
+  </section>
+
+  <!-- B. Revenu par carte -->
+  <section class="section" aria-labelledby="t-b">
+    <div class="section-head">
+      <h2 id="t-b">Chaque carte correspond à une tranche de revenu</h2>
+      <p class="dek">Distribution du revenu annuel, empilée par type de carte, sur une échelle logarithmique. Les traits du haut donnent le revenu minimum et maximum observé pour chaque carte.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-2" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-b"></div>
+    <figure class="figure"><div class="chart" id="chart-b"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> les clients Gold gagnent entre 800&nbsp;k et 3&nbsp;M par an. Leurs revenus chevauchent ceux des Silver (400&nbsp;k à 1,5&nbsp;M) et des Platinum (à partir de 1,5&nbsp;M).</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres.</p>
+    </div>
+    <details class="more" data-table="t-b"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-2"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Revenu annuel</th><td>Quantitative</td><td>Position horizontale (échelle logarithmique)</td><td class="c">1</td></tr>
+<tr><th scope="row">Nombre de clients</th><td>Quantitative</td><td>Hauteur des colonnes</td><td class="c">2</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité)</td><td class="c">2</td></tr>
+<tr><th scope="row">Revenu minimum et maximum par carte</th><td>Quantitative</td><td>Position des traits du haut</td><td class="c">1</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>L’histogramme empilé montre la forme de chaque distribution et les chevauchements entre cartes. L’échelle logarithmique donne la même place à chaque doublement de revenu. En échelle linéaire, 80&#8239;% des clients seraient tassés au début de l’axe.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Les boîtes à moustaches cacheraient la forme des distributions et surtout leurs chevauchements. Cinq courbes de densité superposées se masqueraient entre elles.</td></tr>
+<tr><th scope="row">Couleurs</th><td>La rampe des cartes va du plus clair (Basic) au plus foncé (Signature). Chaque carte garde la même couleur sur tout le site.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Ces chevauchements sont précisément ce qui intéresse le marketing. Un client Silver qui gagne 1,2&nbsp;M a déjà le revenu d’un client Gold, et rien n’empêche de lui proposer la carte au-dessus. Encore faut-il savoir ce que la carte change pour lui, à commencer par son plafond.</p>
+  </section>
+
+  <!-- C. Plafond / revenu -->
+  <section class="section" aria-labelledby="t-c">
+    <div class="section-head">
+      <h2 id="t-c">Le plafond est une part fixe du revenu, propre à chaque carte</h2>
+      <p class="dek">Plafond de crédit en fonction du revenu annuel, en double échelle logarithmique. Chaque point est un client de l’échantillon aléatoire de 3&nbsp;000.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-3" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-c"></div>
+    <figure class="figure"><div class="chart" id="chart-c"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> un client Gold dispose d’un plafond égal à 40&#8239;% de son revenu annuel (entre 36 et 44&#8239;%). Ce multiplicateur passe de 18&#8239;% pour Basic à 75&#8239;% pour Signature.</p>
+      <p><b>Champ&#8239;:</b> échantillon aléatoire de 3&nbsp;000 clients, restreint par les filtres.</p>
+    </div>
+    <details class="more" data-table="t-c"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-3"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Revenu annuel</th><td>Quantitative</td><td>Position horizontale (échelle logarithmique)</td><td class="c">1</td></tr>
+<tr><th scope="row">Plafond de crédit</th><td>Quantitative</td><td>Position verticale (échelle logarithmique)</td><td class="c">1</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité), doublée d’une étiquette</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>En double échelle logarithmique, une proportion devient une droite. Chaque carte forme alors une bande parallèle. On lit à la fois la règle et sa dispersion d’environ 10&#8239;%.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Des barres du rapport moyen entre plafond et revenu seraient plus simples. Elles cacheraient pourtant la règle proportionnelle et sa dispersion.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Rampe des cartes. Silver et Gold se distinguent mal sur de petits points. Chaque bande porte donc son nom.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Le plafond ne regarde donc que le revenu, jamais la façon dont le client rembourse. C’est pourtant ce comportement qui fait son score, comme on le verra au chapitre 3. Avant d’en arriver là, il reste à vérifier que l’âge et le genre ne jouent aucun rôle.</p>
+  </section>
+
+  <!-- D. Âge et genre -->
+  <section class="section" aria-labelledby="t-d">
+    <div class="section-head">
+      <h2 id="t-d">L’âge et le genre ne changent rien à la carte</h2>
+      <p class="dek">Pyramide des âges des clients (femmes à gauche, hommes à droite), chaque barre découpée par type de carte, de Basic (au centre) à Signature (à l’extérieur). À droite, la part de chaque carte par tranche d’âge et par genre : des barres identiques signifient « aucun effet ».</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-4" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-d"></div>
+    <div class="fig-grid">
+      <figure class="figure"><div class="chart" id="chart-d"></div></figure>
+      <div>
+        <h3 style="font-size:1rem;font-weight:620;margin:6px 0 2px">Part de chaque carte</h3>
+        <p style="font-size:14px;color:var(--ink-2);margin:0 0 6px">par tranche d’âge et par genre</p>
+        <div class="chart" id="chart-d2"></div>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> les 25–34 ans forment la tranche la plus nombreuse (34&#8239;% des clients). Dans chaque tranche d’âge et pour chaque genre, la part de chaque carte ne s’écarte pas de plus de 1,2 point de la moyenne.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par le filtre Profession. Les filtres Genre et Âge mettent en évidence la partie concernée de la pyramide.</p>
+    </div>
+    <details class="more" data-table="t-d"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-4"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Âge</th><td>Quantitative (discrète)</td><td>Position verticale</td><td class="c">1</td></tr>
+<tr><th scope="row">Genre</th><td>Nominale</td><td>Position à gauche ou à droite</td><td class="c">1</td></tr>
+<tr><th scope="row">Nombre de clients</th><td>Quantitative</td><td>Longueur des barres</td><td class="c">2</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité)</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>La pyramide met femmes et hommes dos à dos sur le même axe des âges. Chaque barre est découpée par carte. Le graphique voisin donne les parts exactes en barres à 100&#8239;%.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Deux histogrammes séparés rendraient la comparaison moins directe. Un tableau croisé âge × carte compterait 53 × 5 cases. Cinq teintes différentes créeraient un bruit coloré sur des barres aussi fines.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Une seule rampe de bleus. On ne lit pas chaque part sur ces 106 barres. On lit le dégradé d’ensemble&#8239;: s’il reste le même de bas en haut, l’âge ne change pas la carte.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+  </section>
+
+  <section class="takeaways" aria-labelledby="t-retenir">
+    <div class="box">
+      <h2 id="t-retenir">Ce qu’il faut retenir</h2>
+      <div class="items">
+        <p><strong>La profession fixe une fourchette de revenu.</strong> Les étudiants gagnent entre 100&nbsp;k et 400&nbsp;k, les chefs d’entreprise entre 800&nbsp;k et 8&nbsp;M (médiane 4,3&nbsp;M).</p>
+        <p><strong>Le revenu fixe la carte.</strong> Chaque carte couvre une tranche de revenu, avec des chevauchements entre cartes voisines&#8239;: tous les étudiants sont en Basic, et la Signature est réservée aux chefs d’entreprise (41,5&#8239;% d’entre eux).</p>
+        <p><strong>Le plafond suit une règle, pas une négociation.</strong> Il vaut 18&#8239;% du revenu pour une Basic, 28&#8239;% pour une Silver, 40&#8239;% pour une Gold, 55&#8239;% pour une Platinum et 75&#8239;% pour une Signature, à environ 10&#8239;% près.</p>
+        <p><strong>Âge et genre sont neutres.</strong> Les 25–34 ans dominent (34&#8239;%) et les hommes sont un peu plus nombreux (55&#8239;%), mais la répartition des cartes est la même à tout âge et pour les deux genres.</p>
+      </div>
+      <div class="limits">
+        <p><strong>Limite.</strong> Dans ce jeu de données, l’âge est indépendant de la profession&#8239;: on compte 1&nbsp;403 «&#8239;retraités&#8239;» de moins de 30 ans et 593 «&#8239;étudiants&#8239;» de 50 ans ou plus. C’est la marque de données générées de façon synthétique. On décrit donc l’âge, sans l’interpréter.</p>
+      </div>
+    </div>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">On sait maintenant qui détient quelle carte. Le responsable de la fidélité prend le relais avec une autre question&#8239;: une fois la carte en poche, les clients dépensent-ils différemment selon leur profil&#8239;?</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Chapitres précédent et suivant">
+    <a href="index.html"><small>Retour</small><strong>Accueil</strong></a>
+    <a class="next" href="depenses.html"><small>Chapitre 2</small><strong>Comment dépensent-ils&#8239;?</strong></a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Source&#8239;: credit.csv, 50&nbsp;000 clients, calculs des auteurs. <a href="methodologie.html">Méthode et limites</a></p>
+</footer>
+
+<script src="assets/js/d3.v7.min.js"></script>
+<script src="data/donnees.js"></script>
+<script src="assets/js/commun.js"></script>
+<script src="assets/js/profil.js"></script>
+<script>
+/* Lien « Voir la méthode » : ouvre le volet du graphique et le fait défiler à l'écran. */
+(function(){
+  function ouvrir(id, defiler){
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== "DETAILS") return false;
+    d.open = true;
+    if (defiler) {
+      var calme = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      d.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+      var s = d.querySelector("summary"); if (s) s.focus({preventScroll: true});
+    }
+    return true;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-methode]");
+    if (!a) return;
+    if (ouvrir(a.getAttribute("href").slice(1), true)) {
+      e.preventDefault();
+      try { history.replaceState(null, "", a.getAttribute("href")); } catch(_) {}
+    }
+  });
+  if (location.hash) ouvrir(location.hash.slice(1), false);
+})();
+</script>
+</body>
+</html>

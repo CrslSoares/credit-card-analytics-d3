@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comment dépensent-ils ? · Cartes de crédit</title>
+<meta name="description" content="Chapitre 2 : structure et volume des dépenses mensuelles de 50 000 porteurs de carte, par catégorie, carte, âge et profession.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html" aria-current="page"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html">Méthode</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="chapter-head">
+    <p class="kicker">Chapitre 2 sur 4</p>
+    <h1>Comment dépensent-ils&#8239;?</h1>
+    <p class="lead">Tous les clients répartissent leur budget de la même façon&#8239;: un quart pour les courses, moins d’un dixième pour les voyages. Ce qui les distingue, c’est le volume&#8239;: un client Signature dépense 19 fois plus qu’un client Basic, en payant plus souvent et surtout plus cher.</p>
+    <div class="panel contexte" style="margin-top:24px;max-width:72ch">
+      <p class="kicker" style="margin:0 0 8px">La demande de la fidélité</p>
+      <p style="margin:0">Le programme de fidélité arrive en fin de cycle. En interne, une idée revient souvent&#8239;: donner plus de points sur les dépenses typiques de chaque profil, les restaurants pour les jeunes par exemple, ou les voyages pour les cartes haut de gamme. Avant d’y mettre un budget, le responsable du programme veut vérifier que ces profils existent vraiment, et comprendre ce qui distingue un petit client d’un gros.</p>
+    </div>
+  </header>
+
+  <div class="filters" role="region" aria-label="Filtres">
+    <div class="inner" id="filtres"></div>
+  </div>
+
+  <!-- A. Structure des dépenses -->
+  <section class="section" aria-labelledby="t-a">
+    <div class="section-head">
+      <h2 id="t-a">Le même panier pour tous</h2>
+      <p class="dek">Répartition de la dépense mensuelle entre sept catégories, pour l’ensemble des clients et pour chaque groupe. Passez en «&#8239;Montant moyen&#8239;» pour voir, sur le même graphique, l’écart de volume.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-1" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="toolbar">
+      <div class="control">Comparer par <div id="groupe"></div></div>
+      <div id="mesure"></div>
+    </div>
+    <div class="legend" id="leg-a"></div>
+    <figure class="figure"><div class="chart" id="chart-a"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> les courses représentent 24,1&#8239;% de la dépense de l’ensemble des clients, et entre 23,9 et 24,2&#8239;% selon le type de carte.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres. Le groupe choisi dans les filtres est mis en évidence plutôt que filtré.</p>
+    </div>
+    <details class="more" data-table="t-a"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-1"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Catégorie de dépense</th><td>Nominale</td><td>Teinte</td><td class="c">2</td></tr>
+<tr><th scope="row">Part de la dépense</th><td>Quantitative</td><td>Longueur dans une barre à 100&#8239;%</td><td class="c">2</td></tr>
+<tr><th scope="row">Groupe comparé (carte, âge, profession, genre)</th><td>Ordinale ou nominale</td><td>Position verticale, une barre par groupe</td><td class="c">1</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Des barres empilées à 100&#8239;%. Chaque catégorie commence au même endroit d’une barre à l’autre. Le mode «&#8239;Montant moyen&#8239;» montre en plus l’écart de volume.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Camemberts, anneaux et sunbursts codent par l’angle et l’aire. Comparer six camemberts presque identiques serait impossible. Des barres groupées donneraient 35 barres.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Sept teintes, le maximum raisonnable pour des catégories. Simulé pour le daltonisme, l’écart minimal entre deux voisines est de 9,1 (ΔE) pour un seuil recommandé de 8. Les catégories vont toujours de la plus grande à la plus petite.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">C’est une mauvaise nouvelle pour un programme qui voulait récompenser chaque profil sur ses dépenses favorites. Avant d’enterrer l’idée, il faut quand même vérifier que de petits écarts ne se cachent pas derrière ces barres presque identiques.</p>
+  </section>
+
+  <!-- B. Écarts à la moyenne -->
+  <section class="section" aria-labelledby="t-b">
+    <div class="section-head">
+      <h2 id="t-b">Aucun groupe ne s’écarte de plus d’un demi-point</h2>
+      <p class="dek">Écart entre la part de chaque catégorie dans un groupe et sa part dans l’ensemble, en points de pourcentage. Un point par groupe&#8239;; la bande grise marque ±0,5 point.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-2" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <figure class="figure"><div class="chart" id="chart-b"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> l’écart le plus fort, tous regroupements confondus, concerne le carburant chez les 45–54 ans&#8239;: 13,4&#8239;% de leur dépense contre 13,8&#8239;% pour l’ensemble, soit −0,4 point.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres, regroupés selon le choix fait au-dessus du graphique précédent.</p>
+    </div>
+    <details class="more" data-table="t-b"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-2"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Écart à l’ensemble, en points</th><td>Quantitative (signée)</td><td>Position sur un axe centré sur zéro</td><td class="c">1</td></tr>
+<tr><th scope="row">Catégorie de dépense</th><td>Nominale</td><td>Position verticale et pastille de teinte</td><td class="c">1</td></tr>
+<tr><th scope="row">Groupe</th><td>Ordinale ou nominale</td><td>Un point par groupe, nommé dans l’infobulle</td><td class="c">—</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Un diagramme en points. La position sur un axe commun est l’encodage le plus précis pour de petites différences. La bande grise marque ±0,5 point.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Des barres divergentes donneraient 35 barres pour montrer presque rien. Une carte de chaleur coderait l’écart par la couleur, que Mackinlay classe bien plus bas.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Points gris foncé car le message est leur position. Seul le point le plus éloigné est cerclé et commenté.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Même en cherchant bien, aucun profil ne se dégage. Le plus grand écart va même à l’inverse de l’intuition de départ, puisque les 45–54 ans dépensent un peu moins que les autres en carburant. Ce qui sépare les clients, ce n’est donc pas ce qu’ils achètent mais combien ils dépensent. Reste à comprendre d’où vient cet écart.</p>
+  </section>
+
+  <!-- C. Volume : fréquence × panier -->
+  <section class="section" aria-labelledby="t-c">
+    <div class="section-head">
+      <h2 id="t-c">Le volume, lui, est multiplié par 19</h2>
+      <p class="dek">Nombre de transactions par mois et panier moyen. Les petits points sont les clients de l’échantillon, les grands cercles la moyenne de chaque carte (surface proportionnelle au nombre de clients). Chaque courbe grise relie les combinaisons qui donnent la même dépense mensuelle.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-3" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-c"></div>
+    <div class="fig-grid">
+      <figure class="figure"><div class="chart" id="chart-c"></div></figure>
+      <div class="panel">
+        <h3>Part du revenu dépensée par carte</h3>
+        <p style="margin:0 0 6px">Dépense annuelle (12 × la dépense mensuelle) rapportée au revenu annuel.</p>
+        <div class="chart" id="chart-c2"></div>
+        <p class="hint">Les clients haut de gamme dépensent aussi une plus grande part de leur revenu.</p>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> un client Signature fait en moyenne 120 transactions par mois pour un panier de 2&nbsp;911, contre 41 transactions de 426 pour un client Basic&#8239;: 2,9 fois plus de transactions, 6,8 fois plus cher, et 19 fois plus de dépense.</p>
+      <p><b>Champ&#8239;:</b> moyennes calculées sur les clients retenus par les filtres&#8239;; nuage de points tiré de l’échantillon aléatoire de 3&nbsp;000 clients.</p>
+    </div>
+    <details class="more" data-table="t-c"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-3"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Transactions par mois</th><td>Quantitative</td><td>Position horizontale</td><td class="c">1</td></tr>
+<tr><th scope="row">Panier moyen</th><td>Quantitative</td><td>Position verticale</td><td class="c">1</td></tr>
+<tr><th scope="row">Dépense mensuelle</th><td>Quantitative</td><td>Courbes d’iso-dépense</td><td class="c">1</td></tr>
+<tr><th scope="row">Nombre de clients par carte</th><td>Quantitative</td><td>Aire du cercle</td><td class="c">4</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité)</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>La dépense est le produit de la fréquence et du panier. Les courbes d’iso-dépense rendent ce produit visible et montrent d’où vient l’écart entre cartes. Le panneau voisin rapporte la dépense annuelle au revenu.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Deux diagrammes en barres seraient lisibles. Ils ne montreraient pas que la dépense résulte des deux facteurs. Une seule barre par carte dirait combien mais pas pourquoi.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Rampe des cartes. Le nuage de clients est très transparent car il sert de contexte. Les cercles des moyennes sont opaques. Les courbes d’iso-dépense restent grises et fines.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">L’écart vient d’abord du montant de chaque achat, bien plus que du nombre d’achats. Un barème qui récompense le montant dépensé suivrait donc mieux la valeur des clients qu’un barème par transaction. Un seul usage, en fait, distingue vraiment les cartes haut de gamme.</p>
+  </section>
+
+  <!-- D. International -->
+  <section class="section" aria-labelledby="t-d">
+    <div class="section-head">
+      <h2 id="t-d">Payer à l’étranger, un usage des cartes haut de gamme</h2>
+      <p class="dek">Part des clients ayant fait au moins une transaction internationale (barres), comparée à la part des voyages dans leur dépense (points).</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-4" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-d"></div>
+    <figure class="figure"><div class="chart" id="chart-d"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> 6&#8239;% des clients Basic ont payé au moins une fois à l’étranger, contre 100&#8239;% des clients Platinum et Signature. Pourtant, les voyages pèsent 8&#8239;% de la dépense quelle que soit la carte.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres.</p>
+    </div>
+    <details class="more" data-table="t-d"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-4"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Part des clients ayant payé à l’étranger</th><td>Quantitative</td><td>Longueur des barres</td><td class="c">2</td></tr>
+<tr><th scope="row">Part des voyages dans la dépense</th><td>Quantitative</td><td>Position des points</td><td class="c">1</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Position verticale et valeur</td><td class="c">1</td></tr>
+<tr><th scope="row">Nature de la mesure</th><td>Nominale</td><td>Forme (barre ou point)</td><td class="c">6</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Barres et points partagent le même axe de 0 à 100&#8239;%. Il n’y a pas de second axe trompeur. Le contraste entre les deux mesures est le message.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Des barres groupées gaspilleraient de l’encre pour une mesure presque constante (8&#8239;%). Deux graphiques séparés feraient perdre le contraste.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Chaque barre prend la couleur de sa carte, et les points restent en encre neutre. Une couleur n’a ainsi qu’un seul sens dans le graphique.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+  </section>
+
+  <section class="takeaways" aria-labelledby="t-retenir">
+    <div class="box">
+      <h2 id="t-retenir">Ce qu’il faut retenir</h2>
+      <div class="items">
+        <p><strong>Un panier universel.</strong> Courses 24&#8239;%, factures 16&#8239;%, achats en ligne 15&#8239;%, carburant 14&#8239;%, restaurants 12&#8239;%, loisirs 10&#8239;%, voyages 8&#8239;%. Aucun groupe (carte, âge, profession, genre) ne s’en écarte de plus d’un demi-point.</p>
+        <p><strong>Un volume qui suit la carte.</strong> La dépense mensuelle moyenne passe de 16&nbsp;818 (Basic) à 320&nbsp;490 (Signature). L’écart vient surtout du panier moyen (×6,8) et moins du nombre de transactions (×2,9).</p>
+        <p><strong>Les clients aisés dépensent une plus grande part de leur revenu</strong>&#8239;: 49&#8239;% pour Basic, 70&#8239;% pour Signature (en rapportant 12 mois de dépense au revenu annuel).</p>
+        <p><strong>Piste métier.</strong> Un programme de récompenses n’a pas besoin de cibler des catégories par segment&#8239;: il gagnerait à récompenser le volume et l’usage à l’étranger, réservé de fait aux cartes Platinum et Signature.</p>
+      </div>
+      <div class="limits">
+        <p><strong>Limite.</strong> La part de chaque catégorie varie beaucoup d’un client à l’autre (de 0 à 75&#8239;%), mais ces écarts individuels se compensent dans chaque groupe. Le jeu de données ne dit rien de la date des achats&#8239;: impossible d’étudier la saisonnalité.</p>
+      </div>
+    </div>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Tout le monde dépense de la même façon, mais pas dans les mêmes proportions. Pour le service risques, la question suivante vient naturellement&#8239;: ceux qui dépensent le plus sont-ils aussi ceux qui remboursent le mieux&#8239;?</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Chapitres précédent et suivant">
+    <a href="profil.html"><small>Chapitre 1</small><strong>Qui sont nos clients&#8239;?</strong></a>
+    <a class="next" href="risque.html"><small>Chapitre 3</small><strong>Qui présente un risque&#8239;?</strong></a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Source&#8239;: credit.csv, 50&nbsp;000 clients, calculs des auteurs. <a href="methodologie.html">Méthode et limites</a></p>
+</footer>
+
+<script src="assets/js/d3.v7.min.js"></script>
+<script src="data/donnees.js"></script>
+<script src="assets/js/commun.js"></script>
+<script src="assets/js/depenses.js"></script>
+<script>
+/* Lien « Voir la méthode » : ouvre le volet du graphique et le fait défiler à l'écran. */
+(function(){
+  function ouvrir(id, defiler){
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== "DETAILS") return false;
+    d.open = true;
+    if (defiler) {
+      var calme = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      d.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+      var s = d.querySelector("summary"); if (s) s.focus({preventScroll: true});
+    }
+    return true;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-methode]");
+    if (!a) return;
+    if (ouvrir(a.getAttribute("href").slice(1), true)) {
+      e.preventDefault();
+      try { history.replaceState(null, "", a.getAttribute("href")); } catch(_) {}
+    }
+  });
+  if (location.hash) ouvrir(location.hash.slice(1), false);
+})();
+</script>
+</body>
+</html>

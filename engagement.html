@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L’application fidélise-t-elle ? · Cartes de crédit</title>
+<meta name="description" content="Chapitre 4 : connexions à l’application mobile, dépenses et utilisation des points de fidélité de 50 000 porteurs de carte.">
+<script>try{var t=localStorage.getItem("cc-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='1' y='6' width='30' height='20' rx='3.5' fill='%23282b79'/%3E%3Crect x='5' y='12' width='7' height='6' rx='1.4' fill='%23aab4e5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 26 17" aria-hidden="true"><rect class="mark-body" width="26" height="17" rx="3"/><rect class="mark-chip" x="4" y="5.5" width="6" height="5" rx="1.2"/></svg>
+      <span>Cartes de crédit</span>
+    </a>
+    <nav class="chapters" aria-label="Chapitres">
+      <a href="profil.html"><span class="n">1</span><span>Profil</span></a>
+      <a href="depenses.html"><span class="n">2</span><span>Dépenses</span></a>
+      <a href="risque.html"><span class="n">3</span><span>Risque</span></a>
+      <a href="engagement.html" aria-current="page"><span class="n">4</span><span>Engagement</span></a>
+      <a href="conclusion.html">Conclusion</a>
+      <a href="methodologie.html">Méthode</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Changer de thème">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+  <header class="chapter-head">
+    <p class="kicker">Chapitre 4 sur 4</p>
+    <h1>L’application fidélise-t-elle&#8239;?</h1>
+    <p class="lead">Plus un client se connecte à l’application, plus il dépense&#8239;: en partie parce que les plus connectés ont les meilleures cartes, mais l’écart demeure à carte égale, sauf chez les Signature. Le programme de points, lui, reste largement ignoré.</p>
+    <div class="panel contexte" style="margin-top:24px;max-width:72ch">
+      <p class="kicker" style="margin:0 0 8px">La demande de l’équipe de l’application</p>
+      <p style="margin:0">L’équipe de l’application présente son bilan au comité, et son budget en dépend. Elle sait que l’application est utilisée, mais elle n’a jamais réussi à montrer qu’elle changeait quoi que ce soit à l’usage de la carte. Le comité lui a aussi posé une question plus précise, qui découle du chapitre 2&#8239;: l’application pourrait-elle relancer un programme de fidélité qui vise à côté&#8239;?</p>
+    </div>
+  </header>
+
+  <div class="filters" role="region" aria-label="Filtres">
+    <div class="inner" id="filtres"></div>
+  </div>
+
+  <!-- A. Dépense par quintile de connexions -->
+  <section class="section" aria-labelledby="t-a">
+    <div class="section-head">
+      <h2 id="t-a">Les plus connectés dépensent 7 fois plus</h2>
+      <p class="dek">Dépense mensuelle selon le nombre de connexions à l’application, en cinq groupes de même taille (quintiles). Échelle logarithmique&#8239;; les points gris sont les clients de l’échantillon.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-1" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="legend" id="leg-a"></div>
+    <figure class="figure"><div class="chart" id="chart-a"></div></figure>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> la moitié des clients qui se connectent 17 fois ou moins dépensent moins de 14&nbsp;397 par mois&#8239;; chez ceux qui se connectent 49 fois ou plus, la dépense médiane atteint 105&nbsp;430, soit 7,3 fois plus.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres (boîtes)&#8239;; nuage tiré de l’échantillon aléatoire de 3&nbsp;000 clients. La période des connexions n’est pas précisée dans les données.</p>
+    </div>
+    <details class="more" data-table="t-a"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-1"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Dépense mensuelle</th><td>Quantitative (très asymétrique)</td><td>Position verticale (échelle logarithmique)</td><td class="c">1</td></tr>
+<tr><th scope="row">Quintile de connexions</th><td>Ordinale</td><td>Position horizontale</td><td class="c">1</td></tr>
+<tr><th scope="row">Clients de l’échantillon</th><td>—</td><td>Nuage gris en arrière-plan</td><td class="c">—</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Des boîtes à moustaches selon la convention de Tukey. Chaque quintile est résumé par sa médiane et ses quartiles. Le nuage en arrière-plan montre la forme réelle des données. Chaque quintile regroupe 20&#8239;% des clients.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Des barres de moyennes seraient tirées vers le haut par quelques très gros clients. Les violons sont moins familiers. Cinq histogrammes prendraient cinq fois plus de place.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Une seule teinte bleu-vert, réservée aux mesures qui ne représentent pas une carte. Elle est choisie loin de la rampe des cartes (ΔE de 14 à 17) pour ne pas être confondue avec la carte Platinum. Le nuage est gris clair.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">Le lien est net, mais il pourrait venir entièrement des cartes. On a vu au chapitre 1 que les clients haut de gamme dépensent beaucoup plus, et ce sont peut-être aussi eux qui se connectent le plus.</p>
+  </section>
+
+  <!-- B. Effet de la carte -->
+  <section class="section" aria-labelledby="t-b">
+    <div class="section-head">
+      <h2 id="t-b">La carte explique une partie de l’écart, pas tout</h2>
+      <p class="dek">À gauche, la composition de chaque quintile de connexions par type de carte. À droite, la dépense médiane selon le nombre de connexions, carte par carte.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-2" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="fig-split">
+      <div>
+        <h3>Les plus connectés ont aussi les meilleures cartes</h3>
+        <p class="sub">Part de chaque carte par quintile de connexions</p>
+        <div class="legend" id="leg-b"></div>
+        <div class="chart" id="chart-b1"></div>
+      </div>
+      <div>
+        <h3>À carte égale, la dépense augmente encore</h3>
+        <p class="sub">Dépense mensuelle médiane, par tranche de 5 connexions (échelle log.)</p>
+        <div class="legend" id="leg-b2"></div>
+        <div class="chart" id="chart-b2"></div>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> 68&#8239;% des clients les moins connectés ont une carte Basic, et 59&#8239;% des plus connectés une Platinum ou une Signature. Mais parmi les seuls clients Gold, la dépense médiane passe de 30&nbsp;k à près de 90&nbsp;k quand les connexions augmentent. Chez les Signature, elle reste autour de 300&nbsp;k.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres&#8239;; une médiane n’est tracée que si la tranche compte au moins 30 clients.</p>
+    </div>
+    <details class="more" data-table="t-b"><summary>Voir les données : composition par carte</summary><div class="body"></div></details>
+    <details class="more" data-table="t-b2"><summary>Voir les données : dépense médiane par carte</summary><div class="body"></div></details>
+    <details class="more why" id="methode-2"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Part de chaque carte</th><td>Quantitative</td><td>Longueur dans une barre à 100&#8239;%</td><td class="c">2</td></tr>
+<tr><th scope="row">Quintile de connexions</th><td>Ordinale</td><td>Position</td><td class="c">1</td></tr>
+<tr><th scope="row">Nombre de connexions (tranches de 5)</th><td>Quantitative</td><td>Position horizontale</td><td class="c">1</td></tr>
+<tr><th scope="row">Dépense médiane</th><td>Quantitative</td><td>Position verticale (échelle logarithmique)</td><td class="c">1</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité)</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>À gauche, la composition de chaque quintile par carte. À droite, une courbe par carte dont la pente se lit directement. Chaque courbe est étiquetée en bout de ligne.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Pour raisonner à carte égale, 25 boîtes à moustaches seraient illisibles. Des barres groupées casseraient la continuité des connexions.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Rampe des cartes. Deux cartes voisines ont des luminosités proches. Les étiquettes directes et l’infobulle évitent de dépendre de la couleur.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">La carte explique une partie de l’écart, mais pas tout. Parmi les seuls clients Gold, ceux qui se connectent souvent dépensent environ trois fois plus que les autres. Ce n’est pas la preuve que l’application fait dépenser, mais c’est une bonne raison de la tester, en commençant par le programme de fidélité.</p>
+  </section>
+
+  <!-- C. Points de fidélité -->
+  <section class="section" aria-labelledby="t-c">
+    <div class="section-head">
+      <h2 id="t-c">78&#8239;% des points de fidélité ne sont jamais utilisés</h2>
+      <p class="dek">Points gagnés et points utilisés. Le programme récompense davantage les cartes haut de gamme, mais aucun groupe n’utilise ses points plus qu’un autre.</p>
+      <p class="lien-methode" style="margin:8px 0 0;font-size:14px"><a href="#methode-3" data-methode>Voir la méthode de ce graphique ↓</a></p>
+    </div>
+    <div class="fig-split">
+      <div>
+        <h3>Sur 100 points gagnés</h3>
+        <p class="sub" id="waffle-sub"></p>
+        <div class="legend" id="leg-c"></div>
+        <div class="chart" id="chart-c1"></div>
+        <div class="kpis" id="kpis-c" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-top:18px"></div>
+      </div>
+      <div>
+        <h3>Ce que rapportent et deviennent les points</h3>
+        <p class="sub">Points gagnés pour 1&nbsp;000 dépensés, et part des points utilisés, par carte</p>
+        <div class="chart" id="chart-c2"></div>
+        <p class="sub" style="margin-top:22px">Part des points utilisés, par quintile de connexions</p>
+        <div class="chart" id="chart-c3"></div>
+      </div>
+    </div>
+    <div class="fig-notes">
+      <p><b>Lecture&#8239;:</b> un client Signature gagne 80 points pour 1&nbsp;000 dépensés, quatre fois plus qu’un client Basic (20). Pourtant, chaque carte comme chaque niveau de connexion n’utilise qu’environ 22&#8239;% de ses points, et 40&#8239;% des clients n’en ont jamais utilisé un seul.</p>
+      <p><b>Champ&#8239;:</b> clients retenus par les filtres.</p>
+    </div>
+    <details class="more" data-table="t-c"><summary>Voir les données</summary><div class="body"></div></details>
+    <details class="more why" id="methode-3"><summary>Méthode&#8239;: pourquoi ce graphique et ces couleurs&#8239;?</summary><div class="body">
+    <div class="table-wrap"><table class="data methode">
+    <caption class="sr-only">Encodage du graphique</caption>
+    <thead><tr><th scope="col">Donnée</th><th scope="col">Type de variable</th><th scope="col">Variable visuelle (Bertin)</th><th scope="col" class="c">Rang de Mackinlay</th></tr></thead>
+    <tbody>
+<tr><th scope="row">Part des points utilisés</th><td>Quantitative</td><td>Nombre de cases d’un gaufrier de 100, lu comme une longueur</td><td class="c">2</td></tr>
+<tr><th scope="row">Points gagnés pour 1&nbsp;000 dépensés</th><td>Quantitative</td><td>Longueur des barres</td><td class="c">2</td></tr>
+<tr><th scope="row">Taux d’utilisation par carte et par quintile</th><td>Quantitative</td><td>Longueur sur une piste de 100&#8239;%</td><td class="c">2</td></tr>
+<tr><th scope="row">Type de carte</th><td>Ordinale</td><td>Valeur (luminosité)</td><td class="c">2</td></tr>
+    </tbody></table></div>
+    <div class="table-wrap" style="margin-top:14px"><table class="data methode">
+    <caption class="sr-only">Choix du graphique</caption>
+    <tbody>
+<tr><th scope="row">Graphique retenu</th><td>Un gaufrier de 100 cases rend concret le chiffre de 22 points utilisés sur 100. Les barres voisines comparent les cartes, ce que le gaufrier ne permet pas.</td></tr>
+<tr><th scope="row">Graphiques écartés</th><td>Un camembert à deux parts coderait la proportion par un angle moins précis. Il n’apporterait rien de plus qu’un chiffre.</td></tr>
+<tr><th scope="row">Couleurs</th><td>Bleu-vert pour les points utilisés et gris pour les points dormants. Le contraste fait ressortir la petite part utilisée. Les barres par carte prennent la couleur de leur carte.</td></tr>
+    </tbody></table></div>
+    <p class="source" style="margin-top:14px">Calculs et choix détaillés sur la page Méthode&#8239;: <a href="methodologie.html#m-stats">méthodes statistiques</a>, <a href="methodologie.html#m-variables">variables visuelles</a>, <a href="methodologie.html#m-choix">graphiques retenus et écartés</a>.</p>
+    </div></details>
+  </section>
+
+  <section class="takeaways" aria-labelledby="t-retenir">
+    <div class="box">
+      <h2 id="t-retenir">Ce qu’il faut retenir</h2>
+      <div class="items">
+        <p><strong>Engagement digital et dépense vont de pair.</strong> La dépense médiane est 7,3 fois plus élevée chez les 20&#8239;% de clients les plus connectés que chez les 20&#8239;% les moins connectés.</p>
+        <p><strong>La carte en explique une partie.</strong> Les plus connectés sont majoritairement Platinum ou Signature (59&#8239;%), les moins connectés Basic (68&#8239;%). Mais à carte égale, l’écart demeure pour Basic, Silver, Gold et Platinum. Seuls les clients Signature dépensent autant, qu’ils se connectent peu ou beaucoup.</p>
+        <p><strong>Le programme de points est sous-utilisé.</strong> 151 millions de points dorment (78&#8239;% des points gagnés) et 40&#8239;% des clients n’en ont jamais utilisé. Ce taux est le même quels que soient la carte et l’usage de l’application.</p>
+        <p><strong>Piste métier.</strong> L’application touche déjà les plus gros clients&#8239;: c’est le canal naturel pour rappeler le solde de points et proposer de les utiliser.</p>
+      </div>
+      <div class="limits">
+        <p><strong>Limites.</strong> Les données sont observées à un instant donné&#8239;: impossible de dire si l’application fait dépenser plus, ou si les gros clients se connectent davantage. Seule une expérimentation (test A/B) le trancherait.</p>
+      </div>
+    </div>
+    <p class="recit" style="max-width:68ch;margin:32px 0 0;font-size:1.05rem;line-height:1.65">C’est ici que les quatre chapitres se rejoignent. Les points de fidélité dorment, alors que l’application touche justement les clients qui comptent le plus. C’est donc par elle que la banque peut relancer son programme. <a href="conclusion.html">La conclusion</a> reprend l’ensemble.</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="Chapitres précédent et suivant">
+    <a href="risque.html"><small>Chapitre 3</small><strong>Qui présente un risque&#8239;?</strong></a>
+    <a class="next" href="conclusion.html"><small>Conclusion</small><strong>Ce que la banque peut en faire</strong></a>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <p>Projet universitaire de visualisation de données, réalisé avec D3.js v7.</p>
+  <p>Source&#8239;: credit.csv, 50&nbsp;000 clients, calculs des auteurs. <a href="methodologie.html">Méthode et limites</a></p>
+</footer>
+
+<script src="assets/js/d3.v7.min.js"></script>
+<script src="data/donnees.js"></script>
+<script src="assets/js/commun.js"></script>
+<script src="assets/js/engagement.js"></script>
+<script>
+/* Lien « Voir la méthode » : ouvre le volet du graphique et le fait défiler à l'écran. */
+(function(){
+  function ouvrir(id, defiler){
+    var d = document.getElementById(id);
+    if (!d || d.tagName !== "DETAILS") return false;
+    d.open = true;
+    if (defiler) {
+      var calme = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      d.scrollIntoView({behavior: calme ? "auto" : "smooth", block: "start"});
+      var s = d.querySelector("summary"); if (s) s.focus({preventScroll: true});
+    }
+    return true;
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[data-methode]");
+    if (!a) return;
+    if (ouvrir(a.getAttribute("href").slice(1), true)) {
+      e.preventDefault();
+      try { history.replaceState(null, "", a.getAttribute("href")); } catch(_) {}
+    }
+  });
+  if (location.hash) ouvrir(location.hash.slice(1), false);
+})();
+</script>
+</body>
+</html>
